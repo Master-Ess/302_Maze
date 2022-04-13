@@ -1,6 +1,7 @@
 package util;
 
 import java.util.BitSet;
+import java.util.Random;
 
 public class MazeDataStructure {
 	private BitSet data;
@@ -8,11 +9,41 @@ public class MazeDataStructure {
 	private int mazeWidth;
 	private int blocks;
 	
-	public MazeDataStructure(int length, int width) {
+	public MazeDataStructure(int length, int width, boolean isRandom) {
+		Random rand = new Random();
 		this.data = new BitSet();
 		this.mazeHeight = length;
 		this.mazeWidth = width;
 		calculateBlocks();
+		
+		int blockNum = mazeWidth * 2 + 1;
+		if(!isRandom){
+            for(int x = 0; x < mazeHeight; x++){
+                if(x != 0){
+                    for(int i = 0; i < mazeWidth; i++){
+                        data.clear(x * blockNum + i);
+                    }
+                }
+                for(int i = mazeWidth + 1; i < mazeWidth * 2; i++){
+                    data.clear(x * blockNum + i);
+                }
+            }
+		}else{
+            for(int x = 0; x < mazeHeight; x++){
+                if(x != 0){
+                    for(int i = 0; i < mazeWidth; i++){
+                        if(rand.nextInt(2) == 1){
+                            data.clear(x * blockNum + i);
+                        }
+                    }
+                }
+                for(int i = mazeWidth + 1; i < mazeWidth * 2; i++){
+                    if(rand.nextInt(2) == 1){
+                        data.clear(x * blockNum + i);
+                    }
+                }
+            }
+		}
 	}
 	
 	public MazeDataStructure(MazeDataStructure savedData) {
