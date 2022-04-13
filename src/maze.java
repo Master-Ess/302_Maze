@@ -1,6 +1,8 @@
 import java.awt.*;
 import javax.swing.*;
 
+import util.MazeDataStructure;
+
 public class maze{
 
     private static void createWindow() {

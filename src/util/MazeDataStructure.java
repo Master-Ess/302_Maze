@@ -56,22 +56,6 @@ public class MazeDataStructure {
         mazeWidth = rotWidth;
 	}
 	
-	public void runLogicTest() {
-		data.clear();
-		mazeHeight = 2;
-		mazeWidth = 2;
-		calculateBlocks();
-		data.set(0, 3);
-		data.set(4,8);
-		data.set(9,12);
-		System.out.println(printData());
-	    rotateAntiClockwise();
-		System.out.println(printData());
-		rotateAntiClockwise();
-		addWidth(5);
-		System.out.println(printData());
-		}
-	
 	public void rotateAntiClockwise() {
 		//Bottom to top, left to right
 		rotateClockwise();
@@ -93,6 +77,30 @@ public class MazeDataStructure {
 		rotateAntiClockwise();
 	}
 	
+	//WARNING: This test function is meant as a display method to run a simulated test maze.
+	//It will destroy the contents of whatever maze data currently exists. You have been warned
+	public void runLogicTest() {
+		data.clear();
+		mazeHeight = 2;
+		mazeWidth = 2;
+		calculateBlocks();
+		data.set(0, 3);
+		data.set(4,8);
+		data.set(9,12);
+		System.out.println(printData());
+	    rotateAntiClockwise();
+		System.out.println(printData());
+		rotateAntiClockwise();
+		addHeight(5);
+		System.out.println(printData());
+		addWidth(10);
+		System.out.println(printData());
+		addHeight(5);
+		System.out.println(printData());
+		rotateClockwise();
+		System.out.println(printData());
+	}
+	
 	private void addVerticalLine() {
 		calculateBlocks();
 		data.set(blocks);
@@ -107,8 +115,8 @@ public class MazeDataStructure {
 		blocks = (mazeWidth + 1) * mazeHeight + mazeWidth * mazeHeight + mazeWidth;
 	}
 	
-	private String addChar(int func){
-        if(data.get(func)){
+	private String addChar(boolean isOn){
+        if(isOn){
             return "1";
         }else{
             return "0";
@@ -118,18 +126,19 @@ public class MazeDataStructure {
     private String printData(){
         StringBuilder output = new StringBuilder();
         int blockNum = mazeWidth * 2 + 1;
+        
         for(int x = 0; x < mazeHeight; x++){
             for(int i = 0; i < mazeWidth; i++){
-                output.append(addChar(x * blockNum + i));
+                output.append(addChar(data.get(x * blockNum + i)));
             }
             output.append("\n");
             for(int i = mazeWidth; i < mazeWidth * 2 + 1; i++){
-                output.append(addChar(x * blockNum + i));
+                output.append(addChar(data.get(x * blockNum + i)));
             }
             output.append("\n");
         }
         for(int i = 0; i < mazeWidth; i++){
-            output.append(addChar(mazeHeight * blockNum + i));
+            output.append(addChar(data.get(mazeHeight * blockNum + i)));
         }
         output.append("\n");
         
