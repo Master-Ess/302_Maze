@@ -90,4 +90,40 @@ public class MazeDataStructure {
 		blocks = (mazeWidth + 1) * mazeHeight + mazeWidth * mazeHeight + mazeWidth;
 	}
 	
+	static private String addChar(int width, int height, int x, int i, BitSet set){
+        if(x > 0){
+            if(set.get(i + x *(width + height) + (width - x))){
+                return "1";
+            }else{
+                return "0";
+            }
+        }else{
+            if(set.get(i + x *(width + height))){
+                return "1";
+            }else{
+                return "0";
+            }
+        }
+    }
+    
+    static private String printSet(int width, int height, int blocks, BitSet set){
+        StringBuilder output = new StringBuilder();
+        for(int x = 0; x < height; x++){
+            for(int i = 0; i < width; i++){
+                output.append(addChar(width, height, x, i, set));
+            }
+            output.append("\n");
+            for(int i = width; i < width * 2 + 1; i++){
+                output.append(addChar(width, height, x, i, set));
+            }
+            output.append("\n");
+        }
+        for(int i = 0; i < width; i++){
+            output.append(addChar(width,height,height, i + 2, set));
+        }
+        output.append("\n");
+        
+        return output.toString();
+    }
+	
 }
