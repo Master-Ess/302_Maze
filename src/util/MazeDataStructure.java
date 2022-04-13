@@ -36,18 +36,19 @@ public class MazeDataStructure {
         int blockNum = mazeWidth * 2 + 1;
         int rotHeight = mazeWidth;
         int rotWidth = mazeHeight;
+        int newBlockNum = rotWidth * 2 + 1;
         
         for(int x = 0; x < rotHeight; x++){
             for(int i = 0; i < rotWidth; i++){
-                rotated.set(x * blockNum + i, data.get(blockNum * (rotWidth - i - 1) + rotHeight + x));
+                rotated.set(x * newBlockNum + i, data.get(blockNum * (rotWidth - i - 1) + rotHeight + x));
             }
             for(int i = rotWidth; i < rotWidth * 2 + 1; i++){
-                rotated.set(x * blockNum + i, data.get(blockNum * (blockNum - i - 1) + x));
+                rotated.set(x * newBlockNum + i, data.get(blockNum * ((rotWidth * 2 + 1) - i - 1) + x));
             }
         }
         for(int i = 0; i < rotWidth; i++){
             int x = rotHeight;
-            rotated.set(x * blockNum + i, data.get(blockNum * (rotWidth - i - 1) + rotHeight + x));
+            rotated.set(x * newBlockNum + i, data.get(blockNum * (rotWidth - i - 1) + rotHeight + x));
         }
         
         data = rotated;
