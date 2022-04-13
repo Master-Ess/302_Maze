@@ -33,11 +33,33 @@ public class MazeDataStructure {
 	public void rotateClockwise() {
 		//Top to bottom, right to left
 		BitSet rotated = new BitSet();
+        int blockNum = mazeWidth * 2 + 1;
+        int rotHeight = mazeWidth;
+        int rotWidth = mazeHeight;
+        
+        for(int x = 0; x < rotHeight; x++){
+            for(int i = 0; i < rotWidth; i++){
+                rotated.set(x * blockNum + i, data.get(blockNum * (rotWidth - i - 1) + rotHeight + x));
+            }
+            for(int i = rotWidth; i < rotWidth * 2 + 1; i++){
+                rotated.set(x * blockNum + i, data.get(blockNum * (blockNum - i - 1) + x));
+            }
+        }
+        for(int i = 0; i < rotWidth; i++){
+            int x = rotHeight;
+            rotated.set(x * blockNum + i, data.get(blockNum * (rotWidth - i - 1) + rotHeight + x));
+        }
+        
+        data = rotated;
+        mazeHeight = rotHeight;
+        mazeWidth = rotWidth;
 	}
 	
 	public void rotateAntiClockwise() {
 		//Bottom to top, left to right
-		BitSet rotated = new BitSet();
+		rotateClockwise();
+		rotateClockwise();
+		rotateClockwise();
 	}
 	
 	public void addHeight(int rows) {
@@ -65,7 +87,7 @@ public class MazeDataStructure {
 	}
 	
 	private void calculateBlocks() {
-		blocks = (mazeHeight + 1) * mazeWidth + mazeWidth * mazeHeight + mazeHeight;
+		blocks = (mazeWidth + 1) * mazeHeight + mazeWidth * mazeHeight + mazeWidth;
 	}
 	
 }
