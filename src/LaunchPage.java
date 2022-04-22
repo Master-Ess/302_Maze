@@ -19,6 +19,11 @@ public class LaunchPage implements ActionListener {
     private static JTextField makercomp_tf = new JTextField(35);
     private static JTextField makername_tf = new JTextField(35);
 
+    private static JLabel x_size_lbl = new JLabel("Maze Width");
+    private static JSpinner x_size_sp = new JSpinner();
+    private static JLabel y_size_lbl = new JLabel("Maze Height");
+    private static JSpinner y_size_sp = new JSpinner();
+
     // Testing objects - Not currently Implemented
 
     private static JMenu test_mn = new JMenu("Hello");
@@ -58,6 +63,17 @@ public class LaunchPage implements ActionListener {
         frame.add(makercomp_tf);
         makercomp_tf.setBounds(125, 110, 250, 20);
 
+        frame.add(x_size_lbl);
+        x_size_lbl.setBounds(10, 130, 80, 40);
+
+        frame.add(x_size_sp);
+        x_size_sp.setBounds(100,140, 60, 20);
+
+        frame.add(y_size_lbl);
+        y_size_lbl.setBounds(180, 130, 80, 40);
+
+        frame.add(y_size_sp);
+        y_size_sp.setBounds(270, 140, 60, 20);
  
         //frame.add(os);
 
