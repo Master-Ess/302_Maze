@@ -108,6 +108,9 @@ public class MazeDataStructure {
 		rotateAntiClockwise();
 	}
 	
+	public int getWidth() {return mazeWidth;}
+	public int getHeight() {return mazeHeight;}
+	
 	//WARNING: This test function is meant as a display method to run a simulated test maze.
 	//It will destroy the contents of whatever maze data currently exists. You have been warned
 	public void runLogicTest() {

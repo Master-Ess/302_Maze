@@ -1,9 +1,11 @@
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 
+import util.MazeBlock;
 import util.MazeDataStructure;
 
-public class EditWindow {
+public class EditWindow{
 
     JFrame frame = new JFrame();
 
@@ -22,9 +24,13 @@ public class EditWindow {
     private static JMenuItem cut = new JMenuItem("Cut                                 Ctrl + X"); 
     private static JMenuItem copy = new JMenuItem("Copy                              Ctrl + C"); 
     private static JMenuItem paste = new JMenuItem("Paste                            Ctrl + V"); 
+    
+    private static int blockThickness = 10;
+    private static int blockLength = 40;
+    private MazeDataStructure data = null;
 
-    EditWindow(MazeDataStructure data) {
-    	
+    EditWindow(MazeDataStructure inputData) {
+    	data = inputData;
 
         label.setBounds(0, 0, 100, 50);
         label.setFont(new Font(null, Font.PLAIN, 25)); 
@@ -51,6 +57,33 @@ public class EditWindow {
         edit.add(cut);
         edit.add(copy);
         edit.add(paste);
+        
+
+        frame.getContentPane().add(new MazeBlock());
+        frame.pack();
+    }
+    
+    
+    private void drawMaze(MazeDataStructure data) {
+    	int blockNum = data.getWidth() * 2 + 1;
+        //In each of these commented spots, add the builder for a block
+    	//y is the row number, x is the column number
+    	
+        for(int y = 0; y < data.getHeight(); y++){
+        	//Top row
+            for(int x = 0; x < data.getWidth(); x++){
+                //output.append(addChar(data.getBlockState(x * blockNum + i)));
+            }
+            //Vertical Lines
+            for(int x = data.getWidth(); x < data.getWidth() * 2 + 1; x++){
+                //output.append(addChar(data.getBlockState(x * blockNum + i)));
+            }
+        }
+        //gets bottom line
+        for(int x = 0; x < data.getWidth(); x++){
+            //output.append(addChar(data.get(mazeHeight * blockNum + i)));
+        }
+        
 
     }
 }
