@@ -1,16 +1,18 @@
 import java.awt.*;
 import javax.swing.*;
 
+import util.MazeDataStructure;
+
 public class EditWindow {
 
     JFrame frame = new JFrame();
 
     JLabel label = new JLabel("Hello!");
 
-    private static JMenuBar menubar = new JMenuBar();   //Only gonna hvae one so why make the name complex --> it autofills anyway
+    private static JMenuBar menubar = new JMenuBar();   //Only gonna have one so why make the name complex --> it autofills anyway
 
     private static JMenu file = new JMenu("File");
-    private static JMenuItem New_itm = new JMenuItem("New...                            Ctrl + N"); //_itm because of sytax conflict 
+    private static JMenuItem New_itm = new JMenuItem("New...                            Ctrl + N"); //_itm because of syntax conflict 
     private static JMenuItem Load = new JMenuItem("Load...                           Ctrl + L");
     private static JMenuItem Save = new JMenuItem("Save                              Ctrl + S");
     private static JMenuItem Save_as = new JMenuItem("Save As...        Shift + Ctrl + S");
@@ -21,7 +23,8 @@ public class EditWindow {
     private static JMenuItem copy = new JMenuItem("Copy                              Ctrl + C"); 
     private static JMenuItem paste = new JMenuItem("Paste                            Ctrl + V"); 
 
-    EditWindow() {
+    EditWindow(MazeDataStructure data) {
+    	
 
         label.setBounds(0, 0, 100, 50);
         label.setFont(new Font(null, Font.PLAIN, 25)); 

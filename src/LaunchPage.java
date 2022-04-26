@@ -2,13 +2,15 @@ import java.awt.Font;
 import java.awt.event.*;
 import javax.swing.*;
 
+import util.MazeDataStructure;
+
 public class LaunchPage implements ActionListener {
 
     JFrame frame = new JFrame();
-    private static JButton newfile_btn = new JButton("Create New File");
-    private static JButton load_btn = new JButton("Load File");
+    private static JButton newfile_btn = new JButton("Generate Blank Maze");
+    private static JButton load_btn = new JButton("Load Maze");
 
-    private static JLabel Title_lbl = new JLabel("Create New File");
+    private static JLabel Title_lbl = new JLabel("Create New Maze");
 
     private static JLabel filename_lbl = new JLabel("File Name");
     private static JTextField filename_tf = new JTextField(35);
@@ -23,6 +25,11 @@ public class LaunchPage implements ActionListener {
     private static JSpinner x_size_sp = new JSpinner();
     private static JLabel y_size_lbl = new JLabel("Maze Height");
     private static JSpinner y_size_sp = new JSpinner();
+    
+    private static ButtonGroup btn_group = new ButtonGroup();
+    private static JRadioButton rand_maze = new JRadioButton("Random");
+    private static JRadioButton blank_maze = new JRadioButton("Blank");
+    private static JLabel rand_tag = new JLabel("Initial Maze State");
 
     // Testing objects - Not currently Implemented
 
@@ -44,6 +51,7 @@ public class LaunchPage implements ActionListener {
         frame.add(load_btn);
         load_btn.setBounds(10, 300, 185, 40);
         load_btn.setFocusable(false);
+        load_btn.addActionListener(this);
 
         frame.add(filename_lbl);
         filename_lbl.setBounds(10, 40, 60, 40);
@@ -67,13 +75,26 @@ public class LaunchPage implements ActionListener {
         x_size_lbl.setBounds(10, 130, 80, 40);
 
         frame.add(x_size_sp);
-        x_size_sp.setBounds(100,140, 60, 20);
+        x_size_sp.setBounds(125,140, 60, 20);
 
         frame.add(y_size_lbl);
-        y_size_lbl.setBounds(180, 130, 80, 40);
+        y_size_lbl.setBounds(205, 130, 80, 40);
 
         frame.add(y_size_sp);
-        y_size_sp.setBounds(270, 140, 60, 20);
+        y_size_sp.setBounds(295, 140, 60, 20);
+        
+        //Random Group Box
+        btn_group.add(blank_maze);
+        btn_group.add(rand_maze);
+        
+        frame.add(rand_tag);
+        frame.add(rand_maze);
+        frame.add(blank_maze);
+        
+        rand_tag.setBounds(10, 160, 120, 40);
+        rand_maze.setBounds(125, 160, 80, 40);
+        blank_maze.setBounds(205, 160, 60, 40);
+        blank_maze.doClick();
  
         //frame.add(os);
 
@@ -89,9 +110,12 @@ public class LaunchPage implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == newfile_btn) {
+        if (e.getSource().equals(newfile_btn)) {
             frame.dispose();
-            EditWindow myframe = new EditWindow();
+            EditWindow myframe = new EditWindow(new MazeDataStructure((int)x_size_sp.getValue(), (int)y_size_sp.getValue(), rand_maze.isSelected()));
+        }else if(e.getSource().equals(load_btn)) {
+        	frame.dispose();
+        	EditWindow myFrame = new EditWindow(new MazeDataStructure((int)x_size_sp.getValue(), (int)y_size_sp.getValue(), rand_maze.isSelected()));
         }
     }
 }
