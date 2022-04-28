@@ -31,12 +31,6 @@ public class LaunchPage implements ActionListener {
     private static JRadioButton blank_maze = new JRadioButton("Blank");
     private static JLabel rand_tag = new JLabel("Initial Maze State");
 
-    // Testing objects - Not currently Implemented
-
-    private static JMenu test_mn = new JMenu("Hello");
-    private static JMenuItem test_itm = new JMenuItem("ROXY!");
-    private static JMenuItem test_itm2 = new JMenuItem("NICE!");
-
     LaunchPage() {
 
         frame.add(Title_lbl);
