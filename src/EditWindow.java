@@ -5,8 +5,9 @@ import java.awt.event.*;
 import util.MazeBlock;
 import util.MazeDataStructure;
 
-public class EditWindow{
+public class EditWindow extends JPanel{
 
+    private static final long serialVersionUID = 1L;
     JFrame frame = new JFrame();
 
     JLabel label = new JLabel("Hello!");
@@ -35,7 +36,7 @@ public class EditWindow{
         label.setBounds(0, 0, 100, 50);
         label.setFont(new Font(null, Font.PLAIN, 25)); 
 
-        frame.add(label);
+        //frame.add(label);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -65,16 +66,17 @@ public class EditWindow{
 
     }
 
-    private static final long serialVersionUID = 1L;
-    
+    //Graphics stuff
+    @Override
     protected void paintComponent(Graphics g) {
-     //super.paintComponent(g);
+     super.paintComponent(g);
      
      Graphics2D g2 = (Graphics2D)g;
      
      g2.setStroke(new BasicStroke(5));
-     g2.setColor(Color.PINK);
+     g2.setColor(Color.BLACK);
      g2.drawLine(10, 20, 100, 200);
+     //End Graphics Stuff
     }
     
     
