@@ -1,7 +1,13 @@
+import javax.swing.SwingUtilities;
+
 public class Main {
     public static void main(String[] args) {
 
-        LaunchPage launchPge = new LaunchPage();
+    	SwingUtilities.invokeLater(new Runnable() {
+	         public void run() {
+	            LaunchPage run = new LaunchPage();
+	         }
+	      });
 
     }
 }
