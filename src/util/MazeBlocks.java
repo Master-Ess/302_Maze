@@ -31,7 +31,7 @@ public class MazeBlocks extends JPanel{
             }
             //Vertical Lines
             for(int x = data.getWidth(); x < data.getWidth() * 2 + 1; x++){
-                drawVertBlock(g, x * length + padding, y * length + padding, data.getBlockState(y * blockNum + x));
+                drawVertBlock(g, x * length - length*data.getWidth() + padding, y * length + padding, data.getBlockState(y * blockNum + x));
             }
         }
         //gets bottom line
