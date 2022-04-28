@@ -60,7 +60,21 @@ public class EditWindow{
         
 
         frame.getContentPane().add(new MazeBlock());
-        frame.pack();
+        
+      
+
+    }
+
+    private static final long serialVersionUID = 1L;
+    
+    protected void paintComponent(Graphics g) {
+     //super.paintComponent(g);
+     
+     Graphics2D g2 = (Graphics2D)g;
+     
+     g2.setStroke(new BasicStroke(5));
+     g2.setColor(Color.PINK);
+     g2.drawLine(10, 20, 100, 200);
     }
     
     
@@ -86,4 +100,6 @@ public class EditWindow{
         
 
     }
+
+    
 }
