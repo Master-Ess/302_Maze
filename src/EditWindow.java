@@ -63,7 +63,13 @@ public class EditWindow extends JFrame{
 
     }
     
+    private void exportImage() {
+    	
+    }
     
+    private void exportImageSolution() {
+    	
+    }
     
 
     
