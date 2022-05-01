@@ -13,17 +13,19 @@ public class EditWindow extends JFrame{
 
     private static JMenuBar menubar = new JMenuBar();   //Only gonna have one so why make the name complex --> it autofills anyway
 
-    private static JMenu file = new JMenu("File");
-    private static JMenuItem New_itm = new JMenuItem("New...                            Ctrl + N"); //_itm because of syntax conflict 
-    private static JMenuItem Load = new JMenuItem("Load...                           Ctrl + L");
-    private static JMenuItem Save = new JMenuItem("Save                              Ctrl + S");
-    private static JMenuItem Save_as = new JMenuItem("Save As...        Shift + Ctrl + S");
+    private static JMenu file =         new JMenu("File");
+    private static JMenuItem New_itm =  new JMenuItem("New...                            Ctrl + N"); //_itm because of syntax conflict 
+    private static JMenuItem Load =     new JMenuItem("Load...                           Ctrl + L");
+    private static JMenuItem Save =     new JMenuItem("Save                              Ctrl + S");
+    private static JMenuItem Save_as =  new JMenuItem("Save As...        Shift + Ctrl + S");
+    private static JMenuItem Export =   new JMenuItem("Export...");
+    private static JMenuItem Export_w = new JMenuItem("Export with Solution...");
 
-    private static JMenu edit = new JMenu("Edit");
-    private static JMenuItem undo = new JMenuItem("Undo                              Ctrl + Z"); 
-    private static JMenuItem cut = new JMenuItem("Cut                                 Ctrl + X"); 
-    private static JMenuItem copy = new JMenuItem("Copy                              Ctrl + C"); 
-    private static JMenuItem paste = new JMenuItem("Paste                            Ctrl + V"); 
+    private static JMenu edit =         new JMenu("Edit");
+    private static JMenuItem undo =     new JMenuItem("Undo                              Ctrl + Z"); 
+    private static JMenuItem cut =      new JMenuItem("Cut                                 Ctrl + X"); 
+    private static JMenuItem copy =     new JMenuItem("Copy                              Ctrl + C"); 
+    private static JMenuItem paste =    new JMenuItem("Paste                            Ctrl + V"); 
     
     private static int blockThickness = 10;
     private static int blockLength = 40;
@@ -49,6 +51,8 @@ public class EditWindow extends JFrame{
         file.add(Load);
         file.add(Save);
         file.add(Save_as);
+        file.add(Export);
+        file.add(Export_w);
 
         menubar.add(edit);
         edit.add(undo);
