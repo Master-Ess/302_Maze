@@ -63,7 +63,7 @@ public class EditWindow extends JFrame{
         getContentPane().add(new MazeBlocks(data));
         pack();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-      
+        setTitle("M-ELK - New_File_1");
 
     }
     

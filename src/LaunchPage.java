@@ -108,14 +108,14 @@ public class LaunchPage implements ActionListener {
             frame.dispose();
             SwingUtilities.invokeLater(new Runnable() {
 	   	         public void run() {
-	   	        	EditWindow myframe = new EditWindow(new MazeDataStructure((int)x_size_sp.getValue(), (int)y_size_sp.getValue(), rand_maze.isSelected()));
+	   	        	EditWindow myframe = new EditWindow(new MazeDataStructure(Math.abs((int)x_size_sp.getValue()), Math.abs((int)y_size_sp.getValue()), rand_maze.isSelected()));
 	   	         }
    	      	});            
         }else if(e.getSource().equals(load_btn)) {
         	frame.dispose();
         	SwingUtilities.invokeLater(new Runnable() {
 	   	         public void run() {
-	   	        	EditWindow myframe = new EditWindow(new MazeDataStructure((int)x_size_sp.getValue(), (int)y_size_sp.getValue(), rand_maze.isSelected()));
+	   	        	Loadmaze loadmaze = new Loadmaze();
 	   	         }
   	      	});
         }
