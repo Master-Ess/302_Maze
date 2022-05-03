@@ -109,6 +109,27 @@ public class MazeDataStructure {
 		rotateAntiClockwise();
 	}
 	
+	public void randomise() {
+		int rowNum = mazeWidth * 2 + 1;
+		Random rand = new Random();
+		data.set(0,blocks);
+		
+		for(int y = 0; y < mazeHeight; y++){
+            if(y != 0){
+                for(int x = 0; x < mazeWidth; x++){
+                    if(rand.nextInt(2) == 1){
+                        data.clear(y * rowNum + x);
+                    }
+                }
+            }
+            for(int x = mazeWidth + 1; x < mazeWidth * 2; x++){
+                if(rand.nextInt(2) == 1){
+                    data.clear(y * rowNum + x);
+                }
+            }
+        }
+	}
+	
 	public int getWidth() {return mazeWidth;}
 	public int getHeight() {return mazeHeight;}
 	public int getBlocks() {calculateBlocks(); return blocks;}

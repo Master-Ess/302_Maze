@@ -25,7 +25,9 @@ public class EditWindow extends JFrame{
     private static JMenuItem undo =     new JMenuItem("Undo                              Ctrl + Z"); 
     private static JMenuItem cut =      new JMenuItem("Cut                                 Ctrl + X"); 
     private static JMenuItem copy =     new JMenuItem("Copy                              Ctrl + C"); 
-    private static JMenuItem paste =    new JMenuItem("Paste                            Ctrl + V"); 
+    private static JMenuItem paste =    new JMenuItem("Paste                            Ctrl + V");
+    
+    private static JButton randomise = 	new JButton("Random");
     
     private static int blockThickness = 10;
     private static int blockLength = 40;
@@ -59,6 +61,15 @@ public class EditWindow extends JFrame{
         edit.add(cut);
         edit.add(copy);
         edit.add(paste);
+        
+        add(randomise);
+        randomise.setBounds(1000, 5, 100, 30);
+        randomise.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		data.randomise();
+        		repaint();
+        	}
+        });
         
         getContentPane().add(new MazeBlocks(data));
         pack();
