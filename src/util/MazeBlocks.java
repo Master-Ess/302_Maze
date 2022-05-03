@@ -10,7 +10,8 @@ public class MazeBlocks extends JPanel{
 	public static void changeThickness(int newThickness){thickness = newThickness;}
 	public static void changeLength(int newLength) {length = newLength;}
 	private static MazeDataStructure data = null;
-	private static int padding = 5;
+	private static int xPadding = 5;
+	private static int yPadding = 5;
 	
 	public MazeBlocks(MazeDataStructure dataIn) {
     	this.data = dataIn;
@@ -27,16 +28,16 @@ public class MazeBlocks extends JPanel{
         for(int y = 0; y < data.getHeight(); y++){
         	//Top row
             for(int x = 0; x < data.getWidth(); x++){
-            	drawHoriBlock(g, x * length + padding, y * length + padding, data.getBlockState(y * rowNum + x));
+            	drawHoriBlock(g, x * length + xPadding, y * length + yPadding, data.getBlockState(y * rowNum + x));
             }
             //Vertical Lines
             for(int x = data.getWidth(); x < data.getWidth() * 2 + 1; x++){
-                drawVertBlock(g, x * length - length*data.getWidth() + padding, y * length + padding, data.getBlockState(y * rowNum + x));
+                drawVertBlock(g, x * length - length*data.getWidth() + xPadding, y * length + yPadding, data.getBlockState(y * rowNum + x));
             }
         }
         //gets bottom line
         for(int x = 0; x < data.getWidth(); x++){
-        	drawHoriBlock(g, x * length + padding, data.getHeight() * length, data.getBlockState(data.getHeight() * rowNum + x));
+        	drawHoriBlock(g, x * length + xPadding, data.getHeight() * length + yPadding, data.getBlockState(data.getHeight() * rowNum + x));
         }
 	}
 	

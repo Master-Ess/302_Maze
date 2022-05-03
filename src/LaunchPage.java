@@ -7,7 +7,7 @@ import util.MazeDataStructure;
 public class LaunchPage implements ActionListener {
 
     JFrame frame = new JFrame();
-    private static JButton newfile_btn = new JButton("Generate Blank Maze");
+    private static JButton newfile_btn = new JButton("Generate Maze");
     private static JButton load_btn = new JButton("Load Maze");
 
     private static JLabel Title_lbl = new JLabel("Create New Maze");

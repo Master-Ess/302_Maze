@@ -159,7 +159,7 @@ public class MazeDataStructure {
         }
     }
     
-    public String printData(){
+    private String printData(){
         StringBuilder output = new StringBuilder();
         int rowNum = mazeWidth * 2 + 1;
         
