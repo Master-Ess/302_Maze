@@ -19,7 +19,7 @@ public class MazeBlocks extends JPanel{
 	
 	@Override
 	protected void paintComponent(Graphics g) {
-		int blockNum = data.getWidth() * 2 + 1;
+		int rowNum = data.getWidth() * 2 + 1;
 		super.paintComponent(g);
         //In each of these commented spots, add the builder for a block
     	//y is the row number, x is the column number
@@ -27,26 +27,30 @@ public class MazeBlocks extends JPanel{
         for(int y = 0; y < data.getHeight(); y++){
         	//Top row
             for(int x = 0; x < data.getWidth(); x++){
-            	drawHoriBlock(g, x * length + padding, y * length + padding, data.getBlockState(y * blockNum + x));
+            	drawHoriBlock(g, x * length + padding, y * length + padding, data.getBlockState(y * rowNum + x));
             }
             //Vertical Lines
             for(int x = data.getWidth(); x < data.getWidth() * 2 + 1; x++){
-                drawVertBlock(g, x * length - length*data.getWidth() + padding, y * length + padding, data.getBlockState(y * blockNum + x));
+                drawVertBlock(g, x * length - length*data.getWidth() + padding, y * length + padding, data.getBlockState(y * rowNum + x));
             }
         }
         //gets bottom line
         for(int x = 0; x < data.getWidth(); x++){
-        	drawHoriBlock(g, x * length + padding, data.getHeight() * length, data.getBlockState(data.getHeight() * blockNum + x));
+        	drawHoriBlock(g, x * length + padding, data.getHeight() * length, data.getBlockState(data.getHeight() * rowNum + x));
         }
 	}
 	
 	private void drawVertBlock(Graphics g, int x, int y, boolean on){
-		g.drawRect(x, y, thickness, length + thickness);
-		g.fillRect(x, y, thickness, length + thickness);
+		if(on) {
+			g.drawRect(x, y, thickness, length + thickness);
+			g.fillRect(x, y, thickness, length + thickness);
+		}
 	}
 	
 	private void drawHoriBlock(Graphics g, int x, int y, boolean on){
-		g.drawRect(x, y, length + thickness, thickness);
-		g.fillRect(x, y, length + thickness, thickness);
+		if(on) {
+			g.drawRect(x, y, length + thickness, thickness);
+			g.fillRect(x, y, length + thickness, thickness);
+		}
 	}
 }

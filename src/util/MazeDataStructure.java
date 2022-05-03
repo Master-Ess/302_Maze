@@ -9,37 +9,38 @@ public class MazeDataStructure {
 	private int mazeWidth;
 	private int blocks;
 	
-	public MazeDataStructure(int length, int width, boolean isRandom) {
+	public MazeDataStructure(int width, int height, boolean isRandom) {
 		Random rand = new Random();
 		this.data = new BitSet();
-		this.mazeHeight = length;
+		this.mazeHeight = height;
 		this.mazeWidth = width;
 		calculateBlocks();
 		
-		int blockNum = mazeWidth * 2 + 1;
+		int rowNum = mazeWidth * 2 + 1;
+		data.set(0, blocks);
 		if(!isRandom){
-            for(int x = 0; x < mazeHeight; x++){
-                if(x != 0){
-                    for(int i = 0; i < mazeWidth; i++){
-                        data.clear(x * blockNum + i);
+            for(int y = 0; y < mazeHeight; y++){
+                if(y != 0){
+                    for(int x = 0; x < mazeWidth; x++){
+                        data.clear(y * rowNum + x);
                     }
                 }
-                for(int i = mazeWidth + 1; i < mazeWidth * 2; i++){
-                    data.clear(x * blockNum + i);
+                for(int x = mazeWidth + 1; x < mazeWidth * 2; x++){
+                    data.clear(y * rowNum + x);
                 }
             }
 		}else{
-            for(int x = 0; x < mazeHeight; x++){
-                if(x != 0){
-                    for(int i = 0; i < mazeWidth; i++){
+            for(int y = 0; y < mazeHeight; y++){
+                if(y != 0){
+                    for(int x = 0; x < mazeWidth; x++){
                         if(rand.nextInt(2) == 1){
-                            data.clear(x * blockNum + i);
+                            data.clear(y * rowNum + x);
                         }
                     }
                 }
-                for(int i = mazeWidth + 1; i < mazeWidth * 2; i++){
+                for(int x = mazeWidth + 1; x < mazeWidth * 2; x++){
                     if(rand.nextInt(2) == 1){
-                        data.clear(x * blockNum + i);
+                        data.clear(y * rowNum + x);
                     }
                 }
             }
@@ -110,6 +111,7 @@ public class MazeDataStructure {
 	
 	public int getWidth() {return mazeWidth;}
 	public int getHeight() {return mazeHeight;}
+	public int getBlocks() {calculateBlocks(); return blocks;}
 	
 	//WARNING: This test function is meant as a display method to run a simulated test maze.
 	//It will destroy the contents of whatever maze data currently exists. You have been warned
@@ -157,22 +159,22 @@ public class MazeDataStructure {
         }
     }
     
-    private String printData(){
+    public String printData(){
         StringBuilder output = new StringBuilder();
-        int blockNum = mazeWidth * 2 + 1;
+        int rowNum = mazeWidth * 2 + 1;
         
         for(int x = 0; x < mazeHeight; x++){
             for(int i = 0; i < mazeWidth; i++){
-                output.append(addChar(data.get(x * blockNum + i)));
+                output.append(addChar(data.get(x * rowNum + i)));
             }
             output.append("\n");
             for(int i = mazeWidth; i < mazeWidth * 2 + 1; i++){
-                output.append(addChar(data.get(x * blockNum + i)));
+                output.append(addChar(data.get(x * rowNum + i)));
             }
             output.append("\n");
         }
         for(int i = 0; i < mazeWidth; i++){
-            output.append(addChar(data.get(mazeHeight * blockNum + i)));
+            output.append(addChar(data.get(mazeHeight * rowNum + i)));
         }
         output.append("\n");
         
