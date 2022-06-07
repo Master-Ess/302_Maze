@@ -172,17 +172,24 @@ public class DataTable implements TableDataSource{
 		return names;
 	}
 
-	public void updateSaveFile(SaveFile file) {
+	public void updateSaveFile(SaveFile file) throws IOException {
+		ByteArrayOutputStream bAout = new ByteArrayOutputStream();
+		ObjectOutputStream objOut = new ObjectOutputStream(bAout);
 		try {
+			objOut.writeObject(file.getData());
+			objOut.flush();
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
 			LocalDateTime now = LocalDateTime.now(); 
 			updateSaveFile.setString(1, dtf.format(now));
-			updateSaveFile.setBlob(2, (Blob) file.getData());
+			updateSaveFile.setBytes(2, bAout.toByteArray());
 			updateSaveFile.setString(3, file.getFileName());
-			updateSaveFile.executeQuery();
+			updateSaveFile.execute();
 			
 		} catch(SQLException ex) {
 			ex.printStackTrace();
+		}finally {
+			objOut.close();
+            bAout.close();
 		}
 		
 	}

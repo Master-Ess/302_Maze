@@ -57,4 +57,8 @@ public class DBData {
 	public int getSize() {
 		return data.getSize();
 	}
+	
+	public void update(SaveFile file) throws IOException {
+		data.updateSaveFile(file);
+	}
 }

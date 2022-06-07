@@ -16,5 +16,5 @@ public interface TableDataSource {
 	
 	Set<String> fileNameSet();
 	
-	void updateSaveFile(SaveFile fileName);
+	void updateSaveFile(SaveFile fileName) throws IOException;
 }

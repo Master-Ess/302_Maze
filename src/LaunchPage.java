@@ -136,10 +136,6 @@ public class LaunchPage implements ActionListener {
     }
     
     private class ClosingListener extends WindowAdapter {
-
-        /**
-         * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-         */
         public void windowClosing(WindowEvent e) {
            dbdata.persist();
            System.exit(0);

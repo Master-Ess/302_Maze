@@ -2,8 +2,10 @@ import java.awt.*;
 import javax.swing.*;
 
 import database.DBData;
+import database.SaveFile;
 
 import java.awt.event.*;
+import java.io.IOException;
 
 import util.MazeBlocks;
 import util.MazeDataStructure;
@@ -35,9 +37,15 @@ public class EditWindow extends JFrame{
     private static int blockThickness = 10;
     private static int blockLength = 40;
     private MazeDataStructure data = null;
+    private DBData dbdata;
+    private String FileName;
 
     EditWindow(MazeDataStructure inputData, DBData dbdata, String FileName) {
     	data = inputData;
+    	this.dbdata = dbdata;
+    	this.FileName = FileName;
+    	
+    	addWindowListener(new ClosingListener());
 
         label.setBounds(0, 0, 100, 50);
         label.setFont(new Font(null, Font.PLAIN, 25)); 
@@ -89,6 +97,20 @@ public class EditWindow extends JFrame{
     	
     }
     
-
+    private class ClosingListener extends WindowAdapter {
+        public void windowClosing(WindowEvent e) {
+        	SaveFile file = new SaveFile();
+        	file.setData(data);
+        	file.setFileName(FileName);
+        	try {
+				dbdata.update(file);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        	dbdata.persist();
+        	System.exit(0);
+        }
+     }
     
 }
