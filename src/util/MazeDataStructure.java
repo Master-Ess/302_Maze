@@ -1,15 +1,17 @@
 package util;
 
+import java.io.Serializable;
 import java.util.BitSet;
 import java.util.Random;
 
-public class MazeDataStructure {
+public class MazeDataStructure implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private BitSet data;
 	private int mazeHeight;
 	private int mazeWidth;
 	private int blocks;
 	
-	public MazeDataStructure(int width, int height, boolean isRandom) {
+	public MazeDataStructure(int width, int height, boolean isRandom){
 		Random rand = new Random();
 		this.data = new BitSet();
 		this.mazeHeight = height;

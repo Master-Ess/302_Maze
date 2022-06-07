@@ -2,11 +2,15 @@ import java.awt.Font;
 import java.awt.event.*;
 import javax.swing.*;
 
+import database.DBData;
+import database.SaveFile;
 import util.MazeDataStructure;
 
 public class LaunchPage implements ActionListener {
-
+	DBData dbdata;
+	
     JFrame frame = new JFrame();
+    
     private static JButton newfile_btn = new JButton("Generate Maze");
     private static JButton load_btn = new JButton("Load Maze");
 
@@ -31,8 +35,8 @@ public class LaunchPage implements ActionListener {
     private static JRadioButton blank_maze = new JRadioButton("Blank");
     private static JLabel rand_tag = new JLabel("Initial Maze State");
 
-    LaunchPage() {
-
+    LaunchPage(DBData data) {
+    	dbdata = data;
         frame.add(Title_lbl);
         Title_lbl.setBounds(100, 5, 240, 30);
         Title_lbl.setFont(new Font(null, Font.PLAIN, 25));
@@ -108,7 +112,16 @@ public class LaunchPage implements ActionListener {
             frame.dispose();
             SwingUtilities.invokeLater(new Runnable() {
 	   	         public void run() {
-	   	        	EditWindow myframe = new EditWindow(new MazeDataStructure(Math.abs((int)x_size_sp.getValue()), Math.abs((int)y_size_sp.getValue()), rand_maze.isSelected()));
+	   	        	MazeDataStructure data = new MazeDataStructure(Math.abs((int)x_size_sp.getValue()), Math.abs((int)y_size_sp.getValue()), rand_maze.isSelected());
+	   	        	SaveFile file = new SaveFile();
+	   	        	file.setAuthor(makername_tf.getText());
+	   	        	file.setData(data);
+	   	        	file.setCompany(makercomp_tf.getText());
+	   	        	file.setFileName(filename_tf.getText());
+	   	        	dbdata.add(file);
+	   	        	
+	   	        	dbdata.persist();
+	   	        	EditWindow myframe = new EditWindow(data);
 	   	         }
    	      	});            
         }else if(e.getSource().equals(load_btn)) {

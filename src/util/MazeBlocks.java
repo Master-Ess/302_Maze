@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import javax.swing.*;
 
 public class MazeBlocks extends JPanel{
-	static int thickness = 20;
+	static int thickness = 50;
 	static int length = 100;
 	public static void changeThickness(int newThickness){thickness = newThickness;}
 	public static void changeLength(int newLength) {length = newLength;}
