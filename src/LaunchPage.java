@@ -38,6 +38,7 @@ public class LaunchPage implements ActionListener {
     LaunchPage(DBData data) {
     	dbdata = data;
         frame.add(Title_lbl);
+        frame.addWindowListener(new ClosingListener());
         Title_lbl.setBounds(100, 5, 240, 30);
         Title_lbl.setFont(new Font(null, Font.PLAIN, 25));
 
@@ -102,7 +103,7 @@ public class LaunchPage implements ActionListener {
         frame.setVisible(true);
 
         frame.setTitle("M-ELK - Create New File");
-
+        
     }
 
     @Override
@@ -121,16 +122,27 @@ public class LaunchPage implements ActionListener {
 	   	        	dbdata.add(file);
 	   	        	
 	   	        	dbdata.persist();
-	   	        	EditWindow myframe = new EditWindow(data);
+	   	        	EditWindow myframe = new EditWindow(data, dbdata, file.getFileName());
 	   	         }
    	      	});            
         }else if(e.getSource().equals(load_btn)) {
         	frame.dispose();
         	SwingUtilities.invokeLater(new Runnable() {
 	   	         public void run() {
-	   	        	Loadmaze loadmaze = new Loadmaze();
+	   	        	new Loadmaze(dbdata);
 	   	         }
   	      	});
         }
     }
+    
+    private class ClosingListener extends WindowAdapter {
+
+        /**
+         * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+         */
+        public void windowClosing(WindowEvent e) {
+           dbdata.persist();
+           System.exit(0);
+        }
+     }
 }

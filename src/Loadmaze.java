@@ -1,63 +1,261 @@
-import java.awt.Font;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.*;
-import java.util.jar.JarEntry;
 
 import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-import util.MazeDataStructure;
+import database.DBData;
+import database.SaveFile;
 
 public class Loadmaze extends JFrame{
-    JFrame lframe = new JFrame();
-    private static JLabel Title = new JLabel("Load Maze");
-    private static JLabel tbl_lbl_1 = new JLabel("Name:");
-    private static JLabel tbl_lbl_2 = new JLabel("Creator:");
-    private static JLabel tbl_lbl_3 = new JLabel("Last Edit:");
 
-    private static JButton export = new JButton("Export");
-    private static JButton exportws = new JButton("Export w/ Solution");
-
-    //example data
-    private static JLabel name_1 = new JLabel("Maze 1");
-    private static JLabel creator_1 = new JLabel("Default Creator");
-    private static JLabel date_1 = new JLabel("1/1/1970 - 00:00");
+	private JList nameList;
+	
+	private JTextField MazeName;	
+	private JTextField Author;	
+	private JTextField Company;	
+	private JTextField CreationDate;	
+	private JTextField EditedDate;
+	
+	private JButton newButton;	
+	private JButton loadButton;	
+	private JButton deleteButton;	 
+	
+	private DBData data;
     
 
-    Loadmaze(){
-        lframe.setSize(700, 400);
-        lframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        lframe.setLayout(null);
-        lframe.setVisible(true);
-        lframe.setTitle("M-ELK - Load File");
+    public Loadmaze(DBData data){
+    	this.data = data;
+        initUI();
+        checkListSize();
 
-        lframe.add(Title);
-        Title.setBounds(260, 5, 240, 30);
-        Title.setFont(new Font(null, Font.PLAIN, 25));
+        // add listeners to interactive components
+        addButtonListeners(new ButtonListener());
+        addNameListListener(new NameListListener());
+        addClosingListener(new ClosingListener());
 
-        lframe.add(tbl_lbl_1);
-        tbl_lbl_1.setBounds(10, 40, 60, 30);
-        tbl_lbl_1.setFont(new Font(null, Font.PLAIN, 15));
+        // decorate the frame and make it visible
+        setTitle("Address Book");
+        setMinimumSize(new Dimension(400, 300));
+        pack();
+        setVisible(true);        
+    }
+    
+    private void initUI() {
+    	Container contentPane = this.getContentPane();
+    	contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-        lframe.add(tbl_lbl_2);
-        tbl_lbl_2.setBounds(130, 40, 60, 30);
-        tbl_lbl_2.setFont(new Font(null, Font.PLAIN, 15));
+        contentPane.add(Box.createVerticalStrut(20));
+        contentPane.add(makeDetailsPanel());
+        contentPane.add(Box.createVerticalStrut(20));
+        contentPane.add(makeButtonsPanel());
+        contentPane.add(Box.createVerticalStrut(20));
+    }
+    
+    private JPanel makeDetailsPanel() {
+        JPanel detailsPanel = new JPanel();
+        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.X_AXIS));
+        detailsPanel.add(Box.createHorizontalStrut(20));
+        detailsPanel.add(makeNameListPane());
+        detailsPanel.add(Box.createHorizontalStrut(20));
+        detailsPanel.add(makeAddressFieldsPanel());
+        detailsPanel.add(Box.createHorizontalStrut(20));
+        return detailsPanel;
+     }
+    
+    private JScrollPane makeNameListPane() {
+        nameList = new JList(data.getModel());
+        nameList.setFixedCellWidth(200);
 
-        lframe.add(tbl_lbl_3);
-        tbl_lbl_3.setBounds(270, 40, 120, 30);
-        tbl_lbl_3.setFont(new Font(null, Font.PLAIN, 15));
+        JScrollPane scroller = new JScrollPane(nameList);
+        scroller.setViewportView(nameList);
+        scroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scroller.setMinimumSize(new Dimension(200, 150));
+        scroller.setPreferredSize(new Dimension(250, 150));
+        scroller.setMaximumSize(new Dimension(250, 200));
 
-        lframe.add(name_1);
-        name_1.setBounds(10, 70, 60, 30);        
+        return scroller;
+     }
+    
+    private JPanel makeAddressFieldsPanel() {
+        JPanel addressPanel = new JPanel();
+        GroupLayout layout = new GroupLayout(addressPanel);
+        addressPanel.setLayout(layout);
 
-        lframe.add(creator_1);
-        creator_1.setBounds(130, 70, 120, 30); 
+        layout.setAutoCreateGaps(true);
 
-        lframe.add(date_1);
-        date_1.setBounds(270, 70, 120, 30); 
-        
-        lframe.add(export);
-        export.setBounds(380, 70, 100, 30);
+        layout.setAutoCreateContainerGaps(true);
 
-        lframe.add(exportws);
-        exportws.setBounds(490, 70, 180, 30);
-    }   
+        JLabel mazeNameLabel = new JLabel("Maze Name");
+        JLabel authorLabel = new JLabel("Author");
+        JLabel companyLabel = new JLabel("Company");
+        JLabel creationLabel = new JLabel("Created On");
+        JLabel editedLabel = new JLabel("Edited On");
+
+        MazeName = new JTextField(20);
+        Author = new JTextField(20);
+        Company = new JTextField(20);
+        CreationDate = new JTextField(20);
+        EditedDate = new JTextField(20);
+        setFieldsEditable(false);
+
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+
+        hGroup.addGroup(layout.createParallelGroup().addComponent(mazeNameLabel)
+              .addComponent(authorLabel).addComponent(companyLabel).addComponent(
+                    creationLabel).addComponent(editedLabel));
+        hGroup.addGroup(layout.createParallelGroup().addComponent(MazeName)
+              .addComponent(Author).addComponent(Company).addComponent(CreationDate)
+              .addComponent(EditedDate));
+        layout.setHorizontalGroup(hGroup);
+
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+
+
+        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+              .addComponent(mazeNameLabel).addComponent(MazeName));
+
+        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+              .addComponent(authorLabel).addComponent(Author));
+        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+              .addComponent(companyLabel).addComponent(Company));
+        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+              .addComponent(creationLabel).addComponent(CreationDate));
+        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+              .addComponent(editedLabel).addComponent(EditedDate));
+        layout.setVerticalGroup(vGroup);
+
+        return addressPanel;
+     }
+    
+    private JPanel makeButtonsPanel() {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        newButton = new JButton("New");
+        loadButton = new JButton("Load");
+        loadButton.setEnabled(false);
+        deleteButton = new JButton("Delete");
+        buttonPanel.add(Box.createHorizontalStrut(50));
+        buttonPanel.add(newButton);
+        buttonPanel.add(Box.createHorizontalStrut(50));
+        buttonPanel.add(loadButton);
+        buttonPanel.add(Box.createHorizontalStrut(50));
+        buttonPanel.add(deleteButton);
+        buttonPanel.add(Box.createHorizontalStrut(50));
+        return buttonPanel;
+     }
+    
+    private void addButtonListeners(ActionListener listener) {
+        newButton.addActionListener(listener);
+        loadButton.addActionListener(listener);
+        deleteButton.addActionListener(listener);
+     }
+    
+    private void addNameListListener(ListSelectionListener listener) {
+        nameList.addListSelectionListener(listener);
+     }
+    
+    private void addClosingListener(WindowListener listener) {
+        addWindowListener(listener);
+     }
+    
+    private void clearFields() {
+        MazeName.setText("");
+        Author.setText("");
+        Company.setText("");
+        CreationDate.setText("");
+        EditedDate.setText("");
+     }
+    
+    private void setFieldsEditable(boolean editable) {
+        MazeName.setEditable(editable);
+        Author.setEditable(editable);
+        Company.setEditable(editable);
+        CreationDate.setEditable(editable);
+        EditedDate.setEditable(editable);
+     }
+    
+    private void display(SaveFile File) {
+        if (File != null) {
+           MazeName.setText(File.getFileName());
+           Author.setText(File.getAuthor());
+           Company.setText(File.getCompany());
+           CreationDate.setText(File.getCreated_on());
+           EditedDate.setText(File.getEdited_on());
+        }
+     }
+    
+    private void checkListSize() {
+        deleteButton.setEnabled(data.getSize() != 0);
+     }
+    
+    private class ButtonListener implements ActionListener {
+
+        /**
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        public void actionPerformed(ActionEvent e) {
+           JButton source = (JButton) e.getSource();
+           if (source == newButton) {
+              newPressed();
+           } else if (source == loadButton) {
+              LoadPressed();
+           } else if (source == deleteButton) {
+              deletePressed();
+           }
+        }
+
+        private void newPressed() {
+        	dispose();
+        	SwingUtilities.invokeLater(new Runnable() {
+	   	    public void run() {
+	   	    	new LaunchPage(data);
+	   	    }
+        });
+        }
+
+        private void LoadPressed() {
+           if (MazeName.getText() != null && !MazeName.getText().equals("")) {
+              String FileName = MazeName.getText();
+              SaveFile file = data.get(FileName);
+              new EditWindow(file.getData(), data, file.getFileName());
+           }
+        }
+
+        private void deletePressed() {
+           int index = nameList.getSelectedIndex();
+           data.remove(nameList.getSelectedValue());
+           clearFields();
+           index--;
+           if (index == -1) {
+              if (data.getSize() != 0) {
+                 index = 0;
+              }
+           }
+           nameList.setSelectedIndex(index);
+           checkListSize();
+        }
+     }
+    
+    private class NameListListener implements ListSelectionListener {
+    	
+        public void valueChanged(ListSelectionEvent e) {
+           if (nameList.getSelectedValue() != null
+                 && !nameList.getSelectedValue().equals("")) {
+              display(data.get((String)nameList.getSelectedValue()));
+              loadButton.setEnabled(true);
+           }
+        }
+     }
+    
+    private class ClosingListener extends WindowAdapter {
+        public void windowClosing(WindowEvent e) {
+           data.persist();
+           System.exit(0);
+        }
+     }
 }

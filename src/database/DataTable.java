@@ -104,7 +104,6 @@ public class DataTable implements TableDataSource{
 		SaveFile file = new SaveFile();
 		ObjectInputStream objIn = null;
 		ByteArrayInputStream bIn = null;
-		ResultSet brs = null;
 		ResultSet rs = null;
 		try {
 			getSaveFile.setString(1, fileName);
@@ -115,13 +114,9 @@ public class DataTable implements TableDataSource{
 			file.setCompany(rs.getString("company"));
 			file.setEdited_on(rs.getString("edited_on"));
 			file.setCreated_on(rs.getString("created_on"));
-			
-			if(brs.next()) {
-				Blob mazeBlob = brs.getBlob("data");
-				bIn = new ByteArrayInputStream(mazeBlob.getBytes(1, (int)mazeBlob.length()));
-				objIn = new ObjectInputStream(bIn);
-				file.setData((MazeDataStructure) objIn.readObject());
-			}
+			bIn = new ByteArrayInputStream(rs.getBytes("data"));
+			objIn = new ObjectInputStream(bIn);
+			file.setData((MazeDataStructure) objIn.readObject());
 		} catch(SQLException ex) {
 			ex.printStackTrace();
 		}finally {

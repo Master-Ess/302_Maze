@@ -1,5 +1,8 @@
 import java.awt.*;
 import javax.swing.*;
+
+import database.DBData;
+
 import java.awt.event.*;
 
 import util.MazeBlocks;
@@ -33,7 +36,7 @@ public class EditWindow extends JFrame{
     private static int blockLength = 40;
     private MazeDataStructure data = null;
 
-    EditWindow(MazeDataStructure inputData) {
+    EditWindow(MazeDataStructure inputData, DBData dbdata, String FileName) {
     	data = inputData;
 
         label.setBounds(0, 0, 100, 50);
