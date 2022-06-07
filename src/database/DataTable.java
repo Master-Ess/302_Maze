@@ -108,7 +108,7 @@ public class DataTable implements TableDataSource{
 		try {
 			getSaveFile.setString(1, fileName);
 			rs = getSaveFile.executeQuery();
-			rs.next();
+			if(rs.next()) {
 			file.setFileName(rs.getString("filename"));
 			file.setAuthor(rs.getString("author"));
 			file.setCompany(rs.getString("company"));
@@ -117,11 +117,14 @@ public class DataTable implements TableDataSource{
 			bIn = new ByteArrayInputStream(rs.getBytes("data"));
 			objIn = new ObjectInputStream(bIn);
 			file.setData((MazeDataStructure) objIn.readObject());
+			}
 		} catch(SQLException ex) {
 			ex.printStackTrace();
 		}finally {
-			objIn.close();
-			bIn.close();
+			if(file.getFileName() != null) {
+				objIn.close();
+				bIn.close();
+			}
 		}
 		return file;
 		
@@ -143,7 +146,7 @@ public class DataTable implements TableDataSource{
 	public void deleteSaveFile(String fileName) {
 		try {
 			deleteSaveFile.setString(1, fileName);
-			deleteSaveFile.executeQuery();
+			deleteSaveFile.execute();
 		} catch(SQLException ex) {
 			ex.printStackTrace();
 		}

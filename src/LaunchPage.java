@@ -1,5 +1,8 @@
 import java.awt.Font;
 import java.awt.event.*;
+import java.awt.Color;
+import java.text.Collator;
+
 import javax.swing.*;
 
 import database.DBData;
@@ -18,6 +21,7 @@ public class LaunchPage implements ActionListener {
 
     private static JLabel filename_lbl = new JLabel("File Name");
     private static JTextField filename_tf = new JTextField(35);
+    private static JLabel file_exists = new JLabel("This File Name already Exists");
     
     
     private static JLabel makername_lbl = new JLabel("Maker Name");
@@ -85,12 +89,14 @@ public class LaunchPage implements ActionListener {
 
         frame.add(x_size_sp);
         x_size_sp.setBounds(125,140, 60, 20);
+        x_size_sp.setValue(1);
 
         frame.add(y_size_lbl);
         y_size_lbl.setBounds(205, 130, 80, 40);
 
         frame.add(y_size_sp);
         y_size_sp.setBounds(295, 140, 60, 20);
+        y_size_sp.setValue(1);
         
         //Random Group Box
         btn_group.add(blank_maze);
@@ -104,8 +110,12 @@ public class LaunchPage implements ActionListener {
         rand_maze.setBounds(125, 160, 80, 40);
         blank_maze.setBounds(205, 160, 60, 40);
         blank_maze.doClick();
+        
+        frame.add(file_exists);
+        file_exists.setBounds(10, 200, 180, 40);
+        file_exists.setForeground(Color.RED);
+        file_exists.setVisible(false);
  
-        //frame.add(os);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(420, 400);
@@ -120,6 +130,17 @@ public class LaunchPage implements ActionListener {
     	frame.setVisible(true);
     	loadMaze.setVisible(false);
     	editWindow.setVisible(false);
+    	reset();
+    }
+    
+    private void reset() {
+    	file_exists.setVisible(false);
+    	y_size_sp.setValue(1);
+    	x_size_sp.setValue(1);
+    	filename_tf.setText("");
+    	makername_tf.setText("");
+    	makercomp_tf.setText("");
+    	blank_maze.doClick();
     }
     public void setVisible(Boolean bool) {
     	frame.setVisible(bool);
@@ -129,19 +150,18 @@ public class LaunchPage implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource().equals(newfile_btn)) {
-            frame.dispose();
-            SwingUtilities.invokeLater(new Runnable() {
-	   	         public void run() {
-	   	        	MazeDataStructure data = new MazeDataStructure(Math.abs((int)x_size_sp.getValue()), Math.abs((int)y_size_sp.getValue()), rand_maze.isSelected());
-	   	        	SaveFile file = new SaveFile();
-	   	        	file.setAuthor(makername_tf.getText());
-	   	        	file.setData(data);
-	   	        	file.setCompany(makercomp_tf.getText());
-	   	        	file.setFileName(filename_tf.getText());
-	   	        	dbdata.add(file);
-	   	           	editWindow.LoadMaze(data, file.getFileName());
-	   	         }
-   	      	});            
+        	if(dbdata.get(filename_tf.getText()).getFileName() == null && !filename_tf.getText().equals("")) {
+	        	MazeDataStructure data = new MazeDataStructure(Math.abs((int)x_size_sp.getValue()), Math.abs((int)y_size_sp.getValue()), rand_maze.isSelected());
+	        	SaveFile file = new SaveFile();
+	        	file.setAuthor(makername_tf.getText());
+	        	file.setData(data);
+	        	file.setCompany(makercomp_tf.getText());
+	        	file.setFileName(filename_tf.getText());
+	        	dbdata.add(file);
+	           	editWindow.LoadMaze(data, file.getFileName());
+        	}else {
+        		file_exists.setVisible(true);
+        	}
         }else if(e.getSource().equals(load_btn)) {
         	frame.dispose();
         	SwingUtilities.invokeLater(new Runnable() {
