@@ -9,7 +9,7 @@ public class MazeBlocks extends JPanel{
 	static int length = 100;
 	public static void changeThickness(int newThickness){thickness = newThickness;}
 	public static void changeLength(int newLength) {length = newLength;}
-	private static MazeDataStructure data = null;
+	private MazeDataStructure data = null;
 	private static int xPadding = 5;
 	private static int yPadding = 5;
 	

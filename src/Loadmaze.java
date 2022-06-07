@@ -10,7 +10,9 @@ import javax.swing.event.ListSelectionListener;
 import database.DBData;
 import database.SaveFile;
 
+//Layout and setup adapted from CAB302 Week 6 Practical
 public class Loadmaze extends JFrame{
+	private static final long serialVersionUID = 1L;
 
 	private JList nameList;
 	
@@ -25,6 +27,8 @@ public class Loadmaze extends JFrame{
 	private JButton deleteButton;	 
 	
 	private DBData data;
+	private EditWindow editWindow;
+	private LaunchPage launchPage;
     
 
     public Loadmaze(DBData data){
@@ -42,6 +46,17 @@ public class Loadmaze extends JFrame{
         setMinimumSize(new Dimension(400, 300));
         pack();
         setVisible(true);        
+    }
+    
+    public void setWindows(EditWindow editWindow, LaunchPage launchPage) {
+    	this.editWindow = editWindow;
+    	this.launchPage = launchPage;
+    }
+    
+    public void showWindow() {
+    	setVisible(false);
+    	editWindow.setVisible(false);
+    	launchPage.setVisible(false);
     }
     
     private void initUI() {
@@ -194,10 +209,6 @@ public class Loadmaze extends JFrame{
      }
     
     private class ButtonListener implements ActionListener {
-
-        /**
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
         public void actionPerformed(ActionEvent e) {
            JButton source = (JButton) e.getSource();
            if (source == newButton) {
@@ -210,19 +221,18 @@ public class Loadmaze extends JFrame{
         }
 
         private void newPressed() {
-        	dispose();
-        	SwingUtilities.invokeLater(new Runnable() {
-	   	    public void run() {
-	   	    	new LaunchPage(data);
-	   	    }
-        });
+        	launchPage.showWindow();
         }
 
         private void LoadPressed() {
            if (MazeName.getText() != null && !MazeName.getText().equals("")) {
-              String FileName = MazeName.getText();
-              SaveFile file = data.get(FileName);
-              new EditWindow(file.getData(), data, file.getFileName());
+	            String FileName = MazeName.getText();
+	            SaveFile file = data.get(FileName);
+	          	SwingUtilities.invokeLater(new Runnable() {
+	  	   	    public void run() {
+		            editWindow.LoadMaze(file.getData(), FileName);
+	  	   	    }
+	          });
            }
         }
 

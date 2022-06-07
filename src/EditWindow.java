@@ -36,29 +36,40 @@ public class EditWindow extends JFrame{
     
     private static int blockThickness = 10;
     private static int blockLength = 40;
-    private MazeDataStructure data = null;
+    private MazeDataStructure data =  new MazeDataStructure(0, 0, false);
     private DBData dbdata;
     private String FileName;
+    private Loadmaze loadMaze;
+    private LaunchPage launchPage;
 
-    EditWindow(MazeDataStructure inputData, DBData dbdata, String FileName) {
-    	data = inputData;
+    EditWindow( DBData dbdata) {
     	this.dbdata = dbdata;
-    	this.FileName = FileName;
     	
     	addWindowListener(new ClosingListener());
+        
+        //Build Menu
+        initializeUI();
+        
+        
+        
+        
+        
 
+    }
+    
+    public void LoadMaze(MazeDataStructure inputData, String FileName) {
+    	setVisible(true);
+    	this.data = inputData;
+    	this.FileName = FileName;
+    	loadMaze.setVisible(false);
+    	launchPage.setVisible(false);
+    	createNewMaze();
+    }
+    
+    private void initializeUI() {
         label.setBounds(0, 0, 100, 50);
         label.setFont(new Font(null, Font.PLAIN, 25)); 
-
-        //frame.add(label);
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        setVisible(true);
-
-
-        //Build Menu
-        setJMenuBar(menubar);
+    	setJMenuBar(menubar);
         menubar.add(file);
         file.add(New_itm);
         file.add(Load);
@@ -81,12 +92,19 @@ public class EditWindow extends JFrame{
         		repaint();
         	}
         });
-        
-        getContentPane().add(new MazeBlocks(data));
+    }
+    
+    private void createNewMaze() {
+    	initializeUI();
+    	getContentPane().add(new MazeBlocks(data));
         pack();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setTitle("M-ELK - New_File_1");
-
+        setTitle("M-ELK - " + FileName);
+    }
+    
+    public void setWindows(Loadmaze loadMaze, LaunchPage launchPage) {
+    	this.loadMaze = loadMaze;
+    	this.launchPage = launchPage;
     }
     
     private void exportImage() {
@@ -97,17 +115,21 @@ public class EditWindow extends JFrame{
     	
     }
     
+    private void saveFile() {
+    	SaveFile file = new SaveFile();
+    	file.setData(data);
+    	file.setFileName(FileName);
+    	try {
+			dbdata.update(file);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    }
+    
     private class ClosingListener extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
-        	SaveFile file = new SaveFile();
-        	file.setData(data);
-        	file.setFileName(FileName);
-        	try {
-				dbdata.update(file);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+        	saveFile();
         	dbdata.persist();
         	System.exit(0);
         }

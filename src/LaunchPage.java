@@ -34,9 +34,19 @@ public class LaunchPage implements ActionListener {
     private static JRadioButton rand_maze = new JRadioButton("Random");
     private static JRadioButton blank_maze = new JRadioButton("Blank");
     private static JLabel rand_tag = new JLabel("Initial Maze State");
+    
+    private Loadmaze loadMaze;
+    private EditWindow editWindow;
 
     LaunchPage(DBData data) {
     	dbdata = data;
+    	loadMaze = new Loadmaze(dbdata);
+    	editWindow = new EditWindow(dbdata);
+    	loadMaze.setWindows(editWindow, this);
+    	editWindow.setWindows(loadMaze, this);
+    	loadMaze.setVisible(false);
+    	editWindow.setVisible(false);
+    	
         frame.add(Title_lbl);
         frame.addWindowListener(new ClosingListener());
         Title_lbl.setBounds(100, 5, 240, 30);
@@ -105,6 +115,15 @@ public class LaunchPage implements ActionListener {
         frame.setTitle("M-ELK - Create New File");
         
     }
+    
+    public void showWindow() {
+    	frame.setVisible(true);
+    	loadMaze.setVisible(false);
+    	editWindow.setVisible(false);
+    }
+    public void setVisible(Boolean bool) {
+    	frame.setVisible(bool);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -120,16 +139,14 @@ public class LaunchPage implements ActionListener {
 	   	        	file.setCompany(makercomp_tf.getText());
 	   	        	file.setFileName(filename_tf.getText());
 	   	        	dbdata.add(file);
-	   	        	
-	   	        	dbdata.persist();
-	   	        	EditWindow myframe = new EditWindow(data, dbdata, file.getFileName());
+	   	           	editWindow.LoadMaze(data, file.getFileName());
 	   	         }
    	      	});            
         }else if(e.getSource().equals(load_btn)) {
         	frame.dispose();
         	SwingUtilities.invokeLater(new Runnable() {
 	   	         public void run() {
-	   	        	new Loadmaze(dbdata);
+	   	        	loadMaze.setVisible(true);
 	   	         }
   	      	});
         }
