@@ -18,10 +18,26 @@ public class Solve{
 			}
 		}		
 		
+		int[] curloc = startloc;
 		
-		if (findmoves(startloc,size).size() > 1){
-			
+		//probaly make recursive because fun
+		
+		if (findmoves(curloc,size).size() > 1){
+			//mark intersection
 		}
+		else if(findmoves(curloc,size).size() == 1){
+
+			curloc = findmoves(curloc,size).get(0); //check that this works
+		}
+		else {
+			//no possible moves go back to last intersection
+		}
+		
+		if (curloc == endloc) {
+			//solution found
+		}
+		
+		
 		
 	}
 	
