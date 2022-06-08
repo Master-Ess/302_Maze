@@ -2,30 +2,27 @@
 
 TODO LIST
 
-GUI
-
-- LANDING PAGE
-- BUILDER PAGE
-- - MAZE GRAPHIC
-
-PROGRAM
-
-- MAZE
-- - AUTO BUILD
-- - AUTO COMPLETE
-- - FINE TUNE (EDIT MAZE)
-- - MAZE TYPE (IMAGE / EXIT ENTRY)
-- - - LOAD CUSTOM IMAGE
-- - EXPORT TO IMAGE (.PNG ?)
-- - SOLOUTION MODE
-- - NEW / LOAD / SAVE / SAVE AS
-- - UNDO / CUT / COPY / PASTE 
-- - SHORT CUTS
+UI in the maze editor - Luke
+- Rotate buttons
+- Height width modifiers
 
 
-DATABASE
-- CREATION
-- WRITE TO
-- READ FROM
+Pathfinding - Kenzie
+- Finding walls of a cell
+- getting fastest route
 
-LOGIC 
+Database - Elliot
+- Create save file
+- load and save edited files
+
+Editing screen interations - Luke
+- Clicking a block changes its state
+- Drawing a maze between two images
+
+Create the image - Kenzie
+- Taking a snapshot of the maze
+
+Loading mazes - Elliot
+- save information
+- Load saves
+- Create loading gui
