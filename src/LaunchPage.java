@@ -124,6 +124,11 @@ public class LaunchPage implements ActionListener {
 
         frame.setTitle("M-ELK - Create New File");
         
+        // make new maze datastructure - ref line 160 set values to 3, 3 and false
+        // to make walls set bit 0 and set bit 23 - flip bit
+        //put that object into solve camd and print sovle values
+        
+        
     }
     
     public void showWindow() {
@@ -151,6 +156,7 @@ public class LaunchPage implements ActionListener {
 
         if (e.getSource().equals(newfile_btn)) {
         	if(dbdata.get(filename_tf.getText()).getFileName() == null && !filename_tf.getText().equals("")) {
+        		//MazeDataStructure data = new MazeDataStructure(Math.abs((int)x_size_sp.getValue()), Math.abs((int)y_size_sp.getValue()), rand_maze.isSelected());
 	        	MazeDataStructure data = new MazeDataStructure(Math.abs((int)x_size_sp.getValue()), Math.abs((int)y_size_sp.getValue()), rand_maze.isSelected());
 	        	SaveFile file = new SaveFile();
 	        	file.setAuthor(makername_tf.getText());
