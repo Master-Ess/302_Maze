@@ -6,76 +6,81 @@ import java.util.List;
 
 public class Solve{
 	private MazeDataStructure data;
-	public Solve(MazeDataStructure data, int[] startloc, int[] endloc, int[] size) {
-		int size_x = size[0];
-		int size_y = size[1];
-		int[][] distanceto = new int[size_x] [size_y]; 
-		//generate distance board 
-		for (int y = 0; y < size_y; y++) {
-			for (int x = 0; x < size_x; x++) {
-				int[] loc = {x, y};
-				distanceto[x][y] = finddist(loc, endloc);
-			}
-		}		
-		List<int[]> path = new ArrayList<int[]>();					//contains a list of arrays that indicate that path that was taken
-		List<int[]> intersections = new ArrayList<int[]>();			//lists all intersections along the path
-		List<Integer> permutations = new ArrayList<Integer>();		//lists the number of splits at each intersection ( 2 or 3)
-		List<Integer> testedpaths = new ArrayList<Integer>();		//list the number of splits explored for each intersection - default 1 max 3
-		
-		int interdepth = -1; //might not be needed
-		
-		int[] curloc = startloc;
-		
-		
-		
-		//recursive because fun
-		while (curloc != endloc) { 
-			if (findmoves(curloc,size).size() > 1){ 			//if there is multiple directions to go
-				
-				path.add(curloc);
-				intersections.add(curloc);
-				interdepth++;
-				permutations.add(findmoves(curloc,size).size());
-				testedpaths.add(1);
-				
-				curloc = findmoves(curloc,size).get(0); 
-			}
-			else if(findmoves(curloc,size).size() == 1){ 		// if there is one direction to go
-				
-				path.add(curloc);
-				curloc = findmoves(curloc,size).get(0); 												//check that this works
-			}
-			else {												// if there is no direction to go
-				
-				while (permutations.get(interdepth) == testedpaths.get(interdepth)) { //find last unexplored intersection
-					if (interdepth == 0){
-						break; //need to return something i guess
+	private List<int[]> path = new ArrayList<int[]>();					//contains a list of arrays that indicate that path that was taken
+	public Solve(MazeDataStructure data) {
+		this.data = data;
+		int[] startloc = findGap('l');
+		int[] endloc = findGap('r');
+		if(startloc == endloc) {
+			path = null;
+		}else {
+			int[] size = {data.getWidth(), data.getHeight()};
+			int size_x = size[0];
+			int size_y = size[1];
+			int[][] distanceto = new int[size_x] [size_y]; 
+			//generate distance board 
+			for (int y = 0; y < size_y; y++) {
+				for (int x = 0; x < size_x; x++) {
+					int[] loc = {x, y};
+					distanceto[x][y] = finddist(loc, endloc);
+				}
+			}		
+	
+			List<int[]> intersections = new ArrayList<int[]>();			//lists all intersections along the path
+			List<Integer> permutations = new ArrayList<Integer>();		//lists the number of splits at each intersection ( 2 or 3)
+			List<Integer> testedpaths = new ArrayList<Integer>();		//list the number of splits explored for each intersection - default 1 max 3
+			
+			int interdepth = -1; //might not be needed
+			
+			int[] curloc = startloc;
+			
+			
+			
+			//recursive because fun
+			while (curloc != endloc) { 
+				if (findmoves(curloc,size).size() > 1){ 			//if there is multiple directions to go
+					
+					path.add(curloc);
+					intersections.add(curloc);
+					interdepth++;
+					permutations.add(findmoves(curloc,size).size());
+					testedpaths.add(1);
+					
+					curloc = findmoves(curloc,size).get(0); 
+				}
+				else if(findmoves(curloc,size).size() == 1){ 		// if there is one direction to go
+					
+					path.add(curloc);
+					curloc = findmoves(curloc,size).get(0); 												//check that this works
+				}
+				else {												// if there is no direction to go
+					
+					while (permutations.get(interdepth) == testedpaths.get(interdepth)) { //find last unexplored intersection
+						if (interdepth == 0){
+							break; //need to return something i guess
+						}
+						
+						intersections.remove(interdepth);
+						permutations.remove(interdepth);
+						testedpaths.remove(interdepth);
+						interdepth--;
 					}
 					
-					intersections.remove(interdepth);
-					permutations.remove(interdepth);
-					testedpaths.remove(interdepth);
-					interdepth--;
-				}
-				
-				curloc = findmoves(intersections.get(interdepth),size).get(testedpaths.get(interdepth) + 1); //finds the next path from the last unexpored intersection
-				while (path.get(path.size() - 1) != curloc) { //should trim path until it matches the intersection
-					path.remove(path.size() - 1);
-				}
-				testedpaths.set(interdepth, testedpaths.get(interdepth) + 1); 	//should update the tested path
-				
-				//no possible moves go back to last intersection and try next route
-			}		
+					curloc = findmoves(intersections.get(interdepth),size).get(testedpaths.get(interdepth) + 1); //finds the next path from the last unexpored intersection
+					while (path.get(path.size() - 1) != curloc) { //should trim path until it matches the intersection
+						path.remove(path.size() - 1);
+					}
+					testedpaths.set(interdepth, testedpaths.get(interdepth) + 1); 	//should update the tested path
+					
+					//no possible moves go back to last intersection and try next route
+				}		
+			}
+			
+			if (path.get(path.size() - 1) != endloc){
+				path = null;
+			}
+			
 		}
-		
-		if (path.get(path.size() - 1) != endloc){
-			// return error saying there is no route that could be found
-		}
-		else {
-			//insert display path functions here
-		}
-		
-		
 		
 	}
 	
@@ -136,10 +141,17 @@ public class Solve{
     	return posmoves;
     }
     
+    private int[] findGap(char direction) {
+    	int[] location = new int[2];
+    	
+    	
+    	return location;
+    }
+    
     private int finddist(int[] loc, int[] dest ) {
-    	int[] distancear = {dest[0] - loc[0], dest[1] - loc[1]};
-    	int distance = distancear[0] + distancear[1];
-    	return distance; }
+    	int distance = dest[0] - loc[0] + dest[1] - loc[1];
+    	return distance;
+    }
     
     
     
@@ -172,6 +184,10 @@ public class Solve{
             i++;
         }
 
+    }
+    
+    public List<int[]> getPath() {
+    	return path;
     }
 	
 }
