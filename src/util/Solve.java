@@ -22,13 +22,13 @@ public class Solve{
 		List<Integer> permutations = new ArrayList<Integer>();		//lists the number of splits at each intersection ( 2 or 3)
 		List<Integer> testedpaths = new ArrayList<Integer>();		//list the number of splits explored for each intersection - default 1 max 3
 		
-		int interdepth = -1;
+		int interdepth = -1; //might not be needed
 		
 		int[] curloc = startloc;
 		
 		
 		
-		//Probably make recursive because fun
+		//recursive because fun
 		while (curloc != endloc) { 
 			if (findmoves(curloc,size).size() > 1){ 			//if there is multiple directions to go
 				
