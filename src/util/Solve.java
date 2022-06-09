@@ -17,8 +17,8 @@ public class Solve{
 				distanceto[x][y] = finddist(loc, endloc);
 			}
 		}		
-		
-		List<int[]> intersections = new ArrayList<int[]>();
+		List<int[]> path = new ArrayList<int[]>();					//contains a list of arrays that indicate that path that was taken
+		List<int[]> intersections = new ArrayList<int[]>();			//lists all intersections along the path
 		List<Integer> permutations = new ArrayList<Integer>();
 		List<Integer> testedpaths = new ArrayList<Integer>();
 		
@@ -26,45 +26,47 @@ public class Solve{
 		
 		int[] curloc = startloc;
 		
-		//probaly make recursive because fun
 		
-		if (findmoves(curloc,size).size() > 1){ //if there is multiple directions to go
-			
-			intersections.add(curloc);
-			interdepth++;
-			permutations.add(findmoves(curloc,size).size());
-			testedpaths.add(1);
-			
-			curloc = findmoves(curloc,size).get(0); 
-		}
-		else if(findmoves(curloc,size).size() == 1){ // if there is one direction to go
-
-			curloc = findmoves(curloc,size).get(0); //check that this works
-		}
-		else {
-			
-			while (permutations.get(interdepth) == testedpaths.get(interdepth)) {
-				if (interdepth == 0){
-					//no possible paths put something here
+		
+		//Probably make recursive because fun
+		while (curloc != endloc) { 
+			if (findmoves(curloc,size).size() > 1){ 			//if there is multiple directions to go
+				
+				path.add(curloc);
+				intersections.add(curloc);
+				interdepth++;
+				permutations.add(findmoves(curloc,size).size());
+				testedpaths.add(1);
+				
+				curloc = findmoves(curloc,size).get(0); 
+			}
+			else if(findmoves(curloc,size).size() == 1){ 		// if there is one direction to go
+				
+				path.add(curloc);
+				curloc = findmoves(curloc,size).get(0); 												//check that this works
+			}
+			else {												// if there is no direction to go
+				
+				while (permutations.get(interdepth) == testedpaths.get(interdepth)) { //find last unexplored intersection
+					if (interdepth == 0){
+						break; //need to return something i guess
+					}
+					
+					intersections.remove(interdepth);
+					permutations.remove(interdepth);
+					testedpaths.remove(interdepth);
+					interdepth--;
 				}
 				
-				intersections.remove(interdepth);
-				permutations.remove(interdepth);
-				testedpaths.remove(interdepth);
-				interdepth--;
-			}
-			
-			curloc = findmoves(intersections.get(interdepth),size).get(testedpaths.get(interdepth) + 1); //finds the next path from the last unexpored intersection
-			testedpaths.set(interdepth, testedpaths.get(interdepth) + 1); 	//should update the tested path
-			
-			//no possible moves go back to last intersection and try next route
+				curloc = findmoves(intersections.get(interdepth),size).get(testedpaths.get(interdepth) + 1); //finds the next path from the last unexpored intersection
+				while (path.get(path.size() - 1) != curloc) { //should trim path until it matches the intersection
+					path.remove(path.size() - 1);
+				}
+				testedpaths.set(interdepth, testedpaths.get(interdepth) + 1); 	//should update the tested path
+				
+				//no possible moves go back to last intersection and try next route
+			}		
 		}
-		
-		if (curloc == endloc) {
-			//solution found
-		}
-		
-		
 		
 	}
 	
