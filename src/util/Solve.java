@@ -19,8 +19,8 @@ public class Solve{
 		}		
 		List<int[]> path = new ArrayList<int[]>();					//contains a list of arrays that indicate that path that was taken
 		List<int[]> intersections = new ArrayList<int[]>();			//lists all intersections along the path
-		List<Integer> permutations = new ArrayList<Integer>();
-		List<Integer> testedpaths = new ArrayList<Integer>();
+		List<Integer> permutations = new ArrayList<Integer>();		//lists the number of splits at each intersection ( 2 or 3)
+		List<Integer> testedpaths = new ArrayList<Integer>();		//list the number of splits explored for each intersection - default 1 max 3
 		
 		int interdepth = -1;
 		
@@ -67,6 +67,15 @@ public class Solve{
 				//no possible moves go back to last intersection and try next route
 			}		
 		}
+		
+		if (path.get(path.size() - 1) != endloc){
+			// return error saying there is no route that could be found
+		}
+		else {
+			//insert display path functions here
+		}
+		
+		
 		
 	}
 	
