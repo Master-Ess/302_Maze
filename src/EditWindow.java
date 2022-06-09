@@ -49,13 +49,7 @@ public class EditWindow extends JFrame{
         
         //Build Menu
         initializeUI();
-        
-        
-        
-        
-        
-
-    }
+}
     
     public void LoadMaze(MazeDataStructure inputData, String FileName) {
     	setVisible(true);
