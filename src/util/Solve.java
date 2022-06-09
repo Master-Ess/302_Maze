@@ -18,19 +18,46 @@ public class Solve{
 			}
 		}		
 		
+		List<int[]> intersections = new ArrayList<int[]>();
+		List<Integer> permutations = new ArrayList<Integer>();
+		List<Integer> testedpaths = new ArrayList<Integer>();
+		
+		int interdepth = -1;
+		
 		int[] curloc = startloc;
 		
 		//probaly make recursive because fun
 		
-		if (findmoves(curloc,size).size() > 1){
-			//mark intersection
+		if (findmoves(curloc,size).size() > 1){ //if there is multiple directions to go
+			
+			intersections.add(curloc);
+			interdepth++;
+			permutations.add(findmoves(curloc,size).size());
+			testedpaths.add(1);
+			
+			curloc = findmoves(curloc,size).get(0); 
 		}
-		else if(findmoves(curloc,size).size() == 1){
+		else if(findmoves(curloc,size).size() == 1){ // if there is one direction to go
 
 			curloc = findmoves(curloc,size).get(0); //check that this works
 		}
 		else {
-			//no possible moves go back to last intersection
+			
+			while (permutations.get(interdepth) == testedpaths.get(interdepth)) {
+				if (interdepth == 0){
+					//no possible paths put something here
+				}
+				
+				intersections.remove(interdepth);
+				permutations.remove(interdepth);
+				testedpaths.remove(interdepth);
+				interdepth--;
+			}
+			
+			curloc = findmoves(intersections.get(interdepth),size).get(testedpaths.get(interdepth) + 1); //finds the next path from the last unexpored intersection
+			testedpaths.set(interdepth, testedpaths.get(interdepth) + 1); 	//should update the tested path
+			
+			//no possible moves go back to last intersection and try next route
 		}
 		
 		if (curloc == endloc) {
