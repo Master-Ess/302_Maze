@@ -9,13 +9,18 @@ public class MazeDataStructure implements Serializable{
 	private BitSet data;
 	private int mazeHeight;
 	private int mazeWidth;
+	private int blockThickness;
+	private int blockLength;
 	private int blocks;
 	
-	public MazeDataStructure(int width, int height, boolean isRandom){
+	public MazeDataStructure(int width, int height, int thickness, int length, boolean isRandom){
 		Random rand = new Random();
 		this.data = new BitSet();
 		this.mazeHeight = height;
 		this.mazeWidth = width;
+		this.blockThickness = thickness;
+		this.blockLength = length;
+		
 		calculateBlocks();
 		
 		int rowNum = mazeWidth * 2 + 1;
@@ -132,8 +137,19 @@ public class MazeDataStructure implements Serializable{
         }
 	}
 	
+	public void setLength(int blockLength) {
+		this.blockLength = blockLength;
+	}
+	
+	public void setThickness(int blockThickness) {
+		this.blockThickness = blockThickness;
+	}
+	
 	public int getWidth() {return mazeWidth;}
 	public int getHeight() {return mazeHeight;}
+	public int getThickness() {return blockThickness;}
+	public int getLength() {return blockLength;}
+	
 	public int getBlocks() {calculateBlocks(); return blocks;}
 	
 	//WARNING: This test function is meant as a display method to run a simulated test maze.

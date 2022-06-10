@@ -7,7 +7,6 @@ import java.util.List;
 public class Solve{
 	private MazeDataStructure data;
 	private List<int[]> path = new ArrayList<int[]>();					//contains a list of arrays that indicate that path that was taken
-	
 	public Solve(MazeDataStructure data) {
 		this.data = data;
 		int[][] startingLocs = findGaps();
@@ -32,15 +31,14 @@ public class Solve{
 			List<Integer> permutations = new ArrayList<Integer>();		//lists the number of splits at each intersection ( 2 or 3)
 			List<Integer> testedpaths = new ArrayList<Integer>();		//list the number of splits explored for each intersection - default 1 max 3
 			
-			int interdepth = 0; //might not be needed was -1 dont know why
+			int interdepth = -1; //might not be needed
 			
 			int[] curloc = startloc;
 			
 			
 			
 			//recursive because fun
-			while (curloc[0] != endloc[0] || curloc[1] != endloc[1] ) { 
-				
+			while (curloc != endloc) { 
 				if (findmoves(curloc,size).size() > 1){ 			//if there is multiple directions to go
 					
 					path.add(curloc);
@@ -58,7 +56,7 @@ public class Solve{
 				}
 				else {												// if there is no direction to go
 					
-					while (permutations.get(interdepth) == testedpaths.get(interdepth)) { //find last unexplored intersection permutation[interdepth][0] == testedpaths[interdepth[0] && permutation[interdepth][1] == testedpaths[interdepth[0
+					while (permutations.get(interdepth) == testedpaths.get(interdepth)) { //find last unexplored intersection
 						if (interdepth == 0){
 							break; //need to return something i guess
 						}
@@ -79,20 +77,11 @@ public class Solve{
 				}		
 			}
 			
-			if (curloc[0] == endloc[0] && curloc[1] == endloc[1] ) {
-				path.add(curloc);
-			}
-			
-			if (path.get(path.size() - 1) [0] != endloc[0] || path.get(path.size() - 1)[1] != endloc[1]){
-				print(path.get(path.size() - 1));
-				print(endloc);
+			if (path.get(path.size() - 1) != endloc){
 				path = null;
 			}
 			
-			
-			print(path);
-			
-			
+			//print(path)
 			
 		}
 		
@@ -144,10 +133,9 @@ public class Solve{
     		if (walls[i]) {
     			moves[i] = null;
     		}
-    		else if(moves[i][0] < 0 || moves[i][0] > (maxsize[0] - 1) || moves[i][1] < 0 || moves[i][1] > (maxsize[1] - 1)) {
+    		if(moves[i][0] < 0 || moves[i][0] < maxsize[0] || moves[i][1] < 0 || moves[i][1] < maxsize[1]) {
     			moves[i] = null;
     		}
-    		
     		if(moves[i] != null) {
     		posmoves.add(moves[i]);
     		}
@@ -226,12 +214,6 @@ public class Solve{
 
     static void print(boolean bool){
         System.out.println(bool);
-    }
-    
-    static void print(List <int[]> path ) {
-    	for(int[] name:path) {
-			print(name);
-		}
     }
 
     static void print(int[][] array){
