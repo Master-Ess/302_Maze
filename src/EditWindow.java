@@ -22,7 +22,6 @@ public class EditWindow extends JFrame{
     private static JMenuItem New_itm =  new JMenuItem("New...                            Ctrl + N"); //_itm because of syntax conflict 
     private static JMenuItem Load =     new JMenuItem("Load...                           Ctrl + L");
     private static JMenuItem Save =     new JMenuItem("Save                              Ctrl + S");
-    private static JMenuItem Save_as =  new JMenuItem("Save As...        Shift + Ctrl + S");
     private static JMenuItem Export =   new JMenuItem("Export...");
     private static JMenuItem Export_w = new JMenuItem("Export with Solution...");
 
@@ -80,7 +79,12 @@ public class EditWindow extends JFrame{
         file.add(New_itm);
         file.add(Load);
         file.add(Save);
-        file.add(Save_as);
+        	randomise.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	    		EditWindow.saveFile();
+	    	}
+	    });
+        	
         file.add(Export);
         file.add(Export_w);
 
@@ -127,6 +131,7 @@ public class EditWindow extends JFrame{
 	    	}
 	    });
         
+      
         add(x_size_lbl);
         x_size_lbl.setBounds(5, 5, 80, 40);
 
