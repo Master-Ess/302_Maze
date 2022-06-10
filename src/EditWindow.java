@@ -73,10 +73,9 @@ public class EditWindow extends JFrame{
     	this.data = inputData;
     	this.FileName = FileName;
     	loadMaze.setVisible(false);
-    	launchPage.setVisible(false);
-    	//repaint();
-    	
+    	launchPage.setVisible(false);    	
     	createNewMaze();
+    	setSpinnerVals();
     }
     
     private void initializeUI() {
@@ -192,6 +191,14 @@ public class EditWindow extends JFrame{
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("M-ELK - " + FileName);
 		repaint();
+    }
+    
+    private void setSpinnerVals() {
+    	x_size_sp.setValue((int)data.getWidth());
+    	y_size_sp.setValue((int)data.getHeight());
+    	length_sp.setValue((int)data.getLength());
+    	thickness_sp.setValue((int)data.getThickness());
+    	
     }
     
     public void setWindows(Loadmaze loadMaze, LaunchPage launchPage) {
