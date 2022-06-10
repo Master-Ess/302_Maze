@@ -32,11 +32,23 @@ public class EditWindow extends JFrame{
     private static JMenuItem copy =     new JMenuItem("Copy                              Ctrl + C"); 
     private static JMenuItem paste =    new JMenuItem("Paste                            Ctrl + V");
     
-    private static JButton randomise = 	new JButton("Random");
+    private static JButton randomise = 	new JButton("Randomise Maze");
+    
+    private static JButton update = 	new JButton("Update Maze");
+    
+    private static JLabel x_size_lbl = new JLabel("Maze Width");
+    private static JSpinner x_size_sp = new JSpinner();
+    private static JLabel y_size_lbl = new JLabel("Maze Height");
+    private static JSpinner y_size_sp = new JSpinner();
+    private static JLabel thickness_lbl = new JLabel ("Block Thickness");
+    private static JSpinner thickness_sp = new JSpinner();
+    private static JLabel length_lbl = new JLabel ("Block Length");
+    private static JSpinner length_sp = new JSpinner();
+    private static JRadioButton rand_maze = new JRadioButton("Random");
     
     private static int blockThickness = 10;
     private static int blockLength = 40;
-    private MazeDataStructure data =  new MazeDataStructure(0, 0, false);
+    private MazeDataStructure data =  new MazeDataStructure(0, 0, 0, 0, false);
     private DBData dbdata;
     private String FileName;
     private Loadmaze loadMaze;
@@ -49,12 +61,7 @@ public class EditWindow extends JFrame{
         
         //Build Menu
         initializeUI();
-        
-        
-        
-        
-        
-
+       
     }
     
     public void LoadMaze(MazeDataStructure inputData, String FileName) {
@@ -85,13 +92,59 @@ public class EditWindow extends JFrame{
         edit.add(paste);
         
         add(randomise);
-        randomise.setBounds(1000, 5, 100, 30);
+        randomise.setBounds(825, 10, 150, 30);
         randomise.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		data.randomise();
         		repaint();
         	}
         });
+        
+        add(update);
+        update.setBounds(650, 10, 150, 30);
+        update.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		data.randomise();
+        		repaint();
+        	}
+        });
+        
+        
+        add(x_size_lbl);
+        x_size_lbl.setBounds(5, 5, 80, 40);
+
+        add(x_size_sp);
+        x_size_sp.setBounds(80, 15, 60, 20);
+        x_size_sp.setValue(1);
+
+        add(y_size_lbl);
+        y_size_lbl.setBounds(150, 5, 80, 40);
+
+        add(y_size_sp);
+        y_size_sp.setBounds(230, 15, 60, 20);
+        y_size_sp.setValue(1);
+        
+        add(thickness_lbl);
+        thickness_lbl.setBounds(300, 5, 120, 40);
+        
+        add(thickness_sp);
+        thickness_sp.setBounds(400, 15, 60, 20);
+        thickness_sp.setValue(10);
+        
+        add(length_lbl);
+        length_lbl.setBounds(470, 5, 120, 40);
+        
+        add(length_sp);
+        length_sp.setBounds(550, 15, 60, 20);
+        length_sp.setValue(10);
+        
+    }
+    
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(update)) {
+        	MazeDataStructure data = new MazeDataStructure(Math.abs((int)x_size_sp.getValue()), Math.abs((int)y_size_sp.getValue()), Math.abs((int)thickness_sp.getValue()), Math.abs((int)length_sp.getValue()), rand_maze.isSelected());
+           	LoadMaze(data, file.getName());
+        }
     }
     
     private void createNewMaze() {

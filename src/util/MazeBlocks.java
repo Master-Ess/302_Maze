@@ -11,10 +11,12 @@ public class MazeBlocks extends JPanel{
 	public static void changeLength(int newLength) {length = newLength;}
 	private MazeDataStructure data = null;
 	private static int xPadding = 5;
-	private static int yPadding = 5;
+	private static int yPadding = 50;
 	
 	public MazeBlocks(MazeDataStructure dataIn) {
     	this.data = dataIn;
+    	// this.thickness = getThickness();
+    	
     	repaint();
     }
 	
