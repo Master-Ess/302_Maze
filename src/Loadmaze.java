@@ -54,7 +54,7 @@ public class Loadmaze extends JFrame{
     }
     
     public void showWindow() {
-    	setVisible(false);
+    	setVisible(true);
     	editWindow.setVisible(false);
     	launchPage.setVisible(false);
     }

@@ -79,7 +79,17 @@ public class EditWindow extends JFrame{
         menubar.add(file);
         file.add(New_itm);
         file.add(Load);
+	        Load.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	    	    	loadMaze.showWindow();
+	        	}
+	        });	        
         file.add(Save);
+	        randomise.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		saveFile();
+	        	}
+	        });
         file.add(Save_as);
         file.add(Export);
         file.add(Export_w);
@@ -158,7 +168,7 @@ public class EditWindow extends JFrame{
     }
         
     private void createNewMaze() {
-    	initializeUI();
+    	//initializeUI();
     	getContentPane().add(new MazeBlocks(data));
         pack();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
