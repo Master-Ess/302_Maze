@@ -9,11 +9,12 @@ public class Solve{
 	private List<int[]> path = new ArrayList<int[]>();					//contains a list of arrays that indicate that path that was taken
 	public Solve(MazeDataStructure data) {
 		this.data = data;
-		int[] startloc = findGap('l');
-		int[] endloc = findGap('r');
-		if(startloc == endloc) {
+		int[][] startingLocs = findGaps();
+		if(startingLocs == null) {
 			path = null;
-		}else {
+		} else {
+			int[] startloc = startingLocs[0];
+			int[] endloc = startingLocs[1];
 			int[] size = {data.getWidth(), data.getHeight()};
 			int size_x = size[0];
 			int size_y = size[1];
@@ -121,7 +122,7 @@ public class Solve{
 
         return location;
     } 
-	
+
     private List<int[]> findmoves(int[] loc, int[] maxsize) {
     	int[][] moves = {{loc[0], loc[1] + 1},{loc[0] - 1, loc[1]},{loc[0], loc[1] - 1},{loc[0] + 1, loc[1]}}; //up, left, down, right
     	
@@ -143,11 +144,48 @@ public class Solve{
     	return posmoves;
     }
     
-    private int[] findGap(char direction) {
-    	int[] location = new int[2];
+    //Simple function to find gaps in the walls of the maze
+    private int[][] findGaps() {
+    	int[][] returnLocs = new int[2][2];
+    	boolean loc1Found = false;
+    	boolean loc2Found = false;
+    	boolean value = false;
+    	boolean[] walls = null;
+		
+    	for(int x = 0; x < data.getWidth(); x++) {
+    		for(int y = 0; y < data.getHeight(); y++) {
+    			value = true;
+    			if(x == 0 || y == 0 || x == data.getWidth() - 1 || y == data.getHeight() - 1) {
+    				walls = data.getWalls(x, y);
+    				if(x == 0 && !loc2Found) {
+    					value = walls[0];
+    				}if(x == data.getWidth() - 1 && !loc2Found) {
+    					value = walls[2];
+    				}if(y == 0 && !loc2Found) {
+    					value = walls[1];
+    				}if(y == data.getHeight() - 1 && !loc2Found) {
+    					value = walls[3];
+    				}
+    				if(value == false && !loc2Found) {
+    					if(!loc1Found) {
+    						returnLocs[0][0]=x;
+    						returnLocs[0][1]=y;
+    						loc1Found = true;
+    					}else if(returnLocs[0][0] != x && returnLocs[0][1] != y && !loc2Found){
+    						returnLocs[1][0] = x;
+    						returnLocs[1][1] = y;
+    						loc2Found = true;
+    					}
+    				}
+    			}
+    		}
+    	}
     	
+    	if(!loc2Found) {
+    		return null;
+    	}
     	
-    	return location;
+    	return returnLocs;
     }
     
     private int finddist(int[] loc, int[] dest ) {
