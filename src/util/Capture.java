@@ -37,7 +37,7 @@ public class Capture {
 	 
 	  // Save as PNG
 	 
-	  File file = new File("C:\\Users\\Kenzie Haigh\\Documents\\Adobe\\screenshot_small.png");
+	  File file = new File("screenshot_small.png");
 	 
 	  ImageIO.write(bufferedImage, "png", file);
 	 
