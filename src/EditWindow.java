@@ -100,6 +100,16 @@ public class EditWindow extends JFrame{
 	        });
         file.add(Save_as);
         file.add(Export);
+	        Export.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		try {
+						Capture.export();
+					} catch (AWTException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	        	}
+	        });
         file.add(Export_w);
 
         menubar.add(edit);
