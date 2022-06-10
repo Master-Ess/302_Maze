@@ -81,6 +81,8 @@ public class Solve{
 				path = null;
 			}
 			
+			//print(path)
+			
 		}
 		
 	}
