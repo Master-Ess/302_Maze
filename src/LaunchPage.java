@@ -107,14 +107,14 @@ public class LaunchPage implements ActionListener {
         
         frame.add(thickness_sp);
         thickness_sp.setBounds(125, 170, 60, 20);
-        thickness_sp.setValue(10);
+        thickness_sp.setValue(20);
         
         frame.add(length_lbl);
         length_lbl.setBounds(205, 160, 120, 40);
         
         frame.add(length_sp);
         length_sp.setBounds(295, 170, 60, 20);
-        length_sp.setValue(10);
+        length_sp.setValue(50);
 
         //Random Group Box
         btn_group.add(blank_maze);

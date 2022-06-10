@@ -137,6 +137,14 @@ public class MazeDataStructure implements Serializable{
         }
 	}
 	
+	public void setLength(int blockLength) {
+		this.blockLength = blockLength;
+	}
+	
+	public void setThickness(int blockThickness) {
+		this.blockThickness = blockThickness;
+	}
+	
 	public int getWidth() {return mazeWidth;}
 	public int getHeight() {return mazeHeight;}
 	public int getThickness() {return blockThickness;}

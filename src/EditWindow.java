@@ -32,9 +32,10 @@ public class EditWindow extends JFrame{
     private static JMenuItem copy =     new JMenuItem("Copy                              Ctrl + C"); 
     private static JMenuItem paste =    new JMenuItem("Paste                            Ctrl + V");
     
-    private static JButton randomise = 	new JButton("Randomise Maze");
-    
     private static JButton update = 	new JButton("Update Maze");
+    private static JButton randomise = 	new JButton("Randomise Maze");
+    private static JButton rotateClockwise = 	new JButton("Rotate Clockwise");
+    private static JButton rotateAnticlockwise = 	new JButton("Rotate Anticlockwise");
     
     private static JLabel x_size_lbl = new JLabel("Maze Width");
     private static JSpinner x_size_sp = new JSpinner();
@@ -44,10 +45,8 @@ public class EditWindow extends JFrame{
     private static JSpinner thickness_sp = new JSpinner();
     private static JLabel length_lbl = new JLabel ("Block Length");
     private static JSpinner length_sp = new JSpinner();
-    private static JRadioButton rand_maze = new JRadioButton("Random");
     
-    private static int blockThickness = 10;
-    private static int blockLength = 40;
+    
     private MazeDataStructure data =  new MazeDataStructure(0, 0, 0, 0, false);
     private DBData dbdata;
     private String FileName;
@@ -104,11 +103,29 @@ public class EditWindow extends JFrame{
         update.setBounds(650, 10, 150, 30);
         update.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		data.randomise();
+        		data.setLength((int)length_sp.getValue());
+        		data.setThickness((int)thickness_sp.getValue());
         		repaint();
         	}
         });
         
+        add(rotateClockwise);
+        rotateClockwise.setBounds(1000, 10, 150, 30);
+        rotateClockwise.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	    		data.rotateClockwise();
+	    		repaint();
+	    	}
+	    });
+        
+        add(rotateAnticlockwise);
+        rotateAnticlockwise.setBounds(1175, 10, 170, 30);
+        rotateAnticlockwise.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	    		data.rotateAntiClockwise();
+	    		repaint();
+	    	}
+	    });
         
         add(x_size_lbl);
         x_size_lbl.setBounds(5, 5, 80, 40);
@@ -129,24 +146,17 @@ public class EditWindow extends JFrame{
         
         add(thickness_sp);
         thickness_sp.setBounds(400, 15, 60, 20);
-        thickness_sp.setValue(10);
+        thickness_sp.setValue(data.getThickness());
         
         add(length_lbl);
         length_lbl.setBounds(470, 5, 120, 40);
         
         add(length_sp);
         length_sp.setBounds(550, 15, 60, 20);
-        length_sp.setValue(10);
+        length_sp.setValue(data.getLength());
         
     }
-    
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(update)) {
-        	MazeDataStructure data = new MazeDataStructure(Math.abs((int)x_size_sp.getValue()), Math.abs((int)y_size_sp.getValue()), Math.abs((int)thickness_sp.getValue()), Math.abs((int)length_sp.getValue()), rand_maze.isSelected());
-           	LoadMaze(data, file.getName());
-        }
-    }
-    
+        
     private void createNewMaze() {
     	initializeUI();
     	getContentPane().add(new MazeBlocks(data));
