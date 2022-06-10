@@ -7,25 +7,32 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
  
 public class Capture {
  
-  public static void export() throws AWTException {
+  public static void export(String mazename,int widthin, int heightin) throws AWTException, InterruptedException {
 	  
 	  
 	  Robot robot = new Robot();
 	  
+	  TimeUnit.MILLISECONDS.sleep(10);
+	  
 	    // Capture a particular area on the screen
 	 
-	    int x = 50;
+	    int x = 2;
 	 
-	    int y = 50;
+	    int y = 100;
 	 
-	    int width = 250;
+	    int width = widthin;
+	    
+	    System.out.print(width);
 	 
-	    int height = 250;
+	    int height = heightin;
+	    
+	    System.out.print(height);
 	 
 	    Rectangle area = new Rectangle(x, y, width, height);
 	 
@@ -36,11 +43,29 @@ public class Capture {
 	    try {
 	 
 	  // Save as PNG
+	    File test = new File("MazeImages./" + mazename + ".png"); 	
+	    
+	    File file = new File("MazeImages./" + mazename + ".png");  
+	    
+	   if(test.exists()) {
+	   		  int iterator = 2;
+	   		  test = new File("MazeImages./" + mazename + iterator + ".png");
+	   		  while (test.exists()) {
+	   			iterator++;
+	   			test = new File("MazeImages./" + mazename + iterator + ".png");
+	   		  }
+	   		file = new File("MazeImages./" + mazename + iterator + ".png");
+	   		ImageIO.write(bufferedImage, "png", file);
+	   	 }
+	   else {
+		   ImageIO.write(bufferedImage, "png", file);
+	   }
+	   	 
+	   	 
+	    	
 	 
-	  File file = new File("./screenshot_small.png");
 	 
-	  ImageIO.write(bufferedImage, "png", file);
-	 
+	  
 	    } catch (IOException e) {
 	 
 	  System.out.println("Could not save small screenshot " + e.getMessage());

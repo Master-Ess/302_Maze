@@ -103,9 +103,12 @@ public class EditWindow extends JFrame{
 	        Export.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
 	        		try {
-						Capture.export();
+						Capture.export(FileName, (data.getWidth() * data.getLength()) + data.getThickness() + 2, (data.getHeight() * data.getLength()) + data.getThickness() + 2);
 					} catch (AWTException e1) {
-						// TODO Auto-generated catch block
+						// TODO Auto-generated catch block -- File Error	
+						e1.printStackTrace();
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block -- Timer Error
 						e1.printStackTrace();
 					}
 	        	}
@@ -218,7 +221,7 @@ public class EditWindow extends JFrame{
     }
     
     private void exportImage() throws AWTException {
-    	Capture.export();
+    	//Capture.export(FileName);
     }
     
     private void exportImageSolution() {
