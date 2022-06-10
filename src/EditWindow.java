@@ -46,8 +46,12 @@ public class EditWindow extends JFrame{
     private static JLabel length_lbl = new JLabel ("Block Length");
     private static JSpinner length_sp = new JSpinner();
     
+    private static MazeBlocks blocks;
     
-    private MazeDataStructure data =  new MazeDataStructure(0, 0, 0, 0, false);
+    private boolean isInit = false;
+    
+    
+    private MazeDataStructure data;
     private DBData dbdata;
     private String FileName;
     private Loadmaze loadMaze;
@@ -59,7 +63,8 @@ public class EditWindow extends JFrame{
     	addWindowListener(new ClosingListener());
         
         //Build Menu
-        initializeUI();
+        //initializeUI();
+        //createNewMaze();
        
     }
     
@@ -69,6 +74,8 @@ public class EditWindow extends JFrame{
     	this.FileName = FileName;
     	loadMaze.setVisible(false);
     	launchPage.setVisible(false);
+    	//repaint();
+    	
     	createNewMaze();
     }
     
@@ -82,6 +89,7 @@ public class EditWindow extends JFrame{
 	        Load.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
 	    	    	loadMaze.showWindow();
+	    	    	saveFile();
 	        	}
 	        });	        
         file.add(Save);
@@ -165,14 +173,25 @@ public class EditWindow extends JFrame{
         length_sp.setBounds(550, 15, 60, 20);
         length_sp.setValue(data.getLength());
         
+        getContentPane().add(blocks);
     }
         
     private void createNewMaze() {
-    	//initializeUI();
-    	getContentPane().add(new MazeBlocks(data));
+    	if(isInit) {
+    		getContentPane().remove(blocks);
+    	}
+    	blocks = new MazeBlocks(data);
+    	if(!isInit) {
+    		initializeUI();
+    		isInit = true;
+    	}else {
+    		getContentPane().add(blocks);
+    	}
+    	
         pack();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("M-ELK - " + FileName);
+		repaint();
     }
     
     public void setWindows(Loadmaze loadMaze, LaunchPage launchPage) {
