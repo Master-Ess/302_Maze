@@ -7,6 +7,7 @@ import database.SaveFile;
 import java.awt.event.*;
 import java.io.IOException;
 
+import util.Capture;
 import util.MazeBlocks;
 import util.MazeDataStructure;
 
@@ -206,8 +207,8 @@ public class EditWindow extends JFrame{
     	this.launchPage = launchPage;
     }
     
-    private void exportImage() {
-    	
+    private void exportImage() throws AWTException {
+    	Capture.export();
     }
     
     private void exportImageSolution() {
