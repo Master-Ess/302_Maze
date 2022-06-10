@@ -5,18 +5,16 @@ import java.awt.Graphics;
 import javax.swing.*;
 
 public class MazeBlocks extends JPanel{
-	private int thickness;
-	private int length;
+	static int thickness = 50;
+	static int length = 100;
+	public static void changeThickness(int newThickness){thickness = newThickness;}
+	public static void changeLength(int newLength) {length = newLength;}
 	private MazeDataStructure data = null;
 	private static int xPadding = 5;
-	private static int yPadding = 50;
+	private static int yPadding = 5;
 	
 	public MazeBlocks(MazeDataStructure dataIn) {
     	this.data = dataIn;
-    	this.thickness = data.getThickness();
-    	this.length = data.getLength();
-    	// this.thickness = getThickness();
-    	
     	repaint();
     }
 	
@@ -24,8 +22,6 @@ public class MazeBlocks extends JPanel{
 	protected void paintComponent(Graphics g) {
 		int rowNum = data.getWidth() * 2 + 1;
 		super.paintComponent(g);
-		this.thickness = data.getThickness();
-		this.length = data.getLength();
         //In each of these commented spots, add the builder for a block
     	//y is the row number, x is the column number
     	
