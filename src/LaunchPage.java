@@ -146,7 +146,6 @@ public class LaunchPage implements ActionListener {
         // to make walls set bit 0 and set bit 23 - flip bit
         //put that object into solve camd and print sovle values
         
-        
     }
     
     public void showWindow() {
