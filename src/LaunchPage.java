@@ -8,6 +8,7 @@ import javax.swing.*;
 import database.DBData;
 import database.SaveFile;
 import util.MazeDataStructure;
+import util.Solve;
 
 public class LaunchPage implements ActionListener {
 	DBData dbdata;
@@ -127,6 +128,13 @@ public class LaunchPage implements ActionListener {
         // make new maze datastructure - ref line 160 set values to 3, 3 and false
         // to make walls set bit 0 and set bit 23 - flip bit
         //put that object into solve camd and print sovle values
+        //
+        //
+        
+        MazeDataStructure testingdata_kenzie = new MazeDataStructure(3, 3, false);
+        testingdata_kenzie.flipBlock(0);testingdata_kenzie.flipBlock(23);
+        
+        Solve idk = new Solve(testingdata_kenzie);
         
         
     }
