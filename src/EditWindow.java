@@ -64,6 +64,8 @@ public class EditWindow extends JFrame{
     	this.dbdata = dbdata;
     	
     	addWindowListener(new ClosingListener());
+	    getContentPane().addMouseListener(new MouseListener());
+
     }
     
     public void LoadMaze(MazeDataStructure inputData, String FileName) {
@@ -110,7 +112,6 @@ public class EditWindow extends JFrame{
 	        	}
 	        });
 	        
-	    getContentPane().addMouseListener(new MouseListener());
 	    
         file.add(Export_w);
 

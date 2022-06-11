@@ -43,18 +43,23 @@ public class Capture {
 	    try {
 	 
 	  // Save as PNG
-	    File test = new File("MazeImages./" + mazename + ".png"); 	
+	    File folder = new File("./MazeImages/");
+	    if(!folder.exists()) {
+	    	folder.mkdirs();
+	    }
+	    File test = new File("./MazeImages/" + mazename + ".png"); 	
 	    
-	    File file = new File("MazeImages./" + mazename + ".png");  
+	    File file = new File("./MazeImages/" + mazename + ".png");
+	    
 	    
 	   if(test.exists()) {
 	   		  int iterator = 2;
-	   		  test = new File("MazeImages./" + mazename + iterator + ".png");
+	   		  test = new File("./MazeImages/" + mazename + iterator + ".png");
 	   		  while (test.exists()) {
 	   			iterator++;
-	   			test = new File("MazeImages./" + mazename + iterator + ".png");
+	   			test = new File("./MazeImages/" + mazename + iterator + ".png");
 	   		  }
-	   		file = new File("MazeImages./" + mazename + iterator + ".png");
+	   		file = new File("./MazeImages/" + mazename + iterator + ".png");
 	   		ImageIO.write(bufferedImage, "png", file);
 	   	 }
 	   else {
