@@ -7,12 +7,14 @@ import java.util.List;
 public class Solve{
 	private MazeDataStructure data;
 	private List<int[]> path = new ArrayList<int[]>();					//contains a list of arrays that indicate that path that was taken
+	private List<int[]> exploredpath = new ArrayList<int[]>();
 	
 	public Solve(MazeDataStructure data) {
 		this.data = data;
 		int[][] startingLocs = findGaps();
 		if(startingLocs == null) {
 			path = null;
+			exploredpath = null;
 		} else {
 			int[] startloc = startingLocs[0];
 			int[] endloc = startingLocs[1];
@@ -71,13 +73,22 @@ public class Solve{
 						testedpaths.remove(interdepth);
 						interdepth--;
 					}
-					
-					curloc[0] = findmoves(intersections.get(interdepth),size,distanceto).get(testedpaths.get(interdepth) + 1).x; //finds the next path from the last unexpored intersection
-					curloc[1] = findmoves(intersections.get(interdepth),size,distanceto).get(testedpaths.get(interdepth) + 1).y;
-					while (path.get(path.size() - 1) != curloc) { //should trim path until it matches the intersection
+					moves = findmoves(intersections.get(interdepth),size,distanceto);
+					curloc[0] = moves.get(0).x ; 												//check that this works
+					curloc[1] = moves.get(0).y ;
+					while (path.get(path.size() - 1) != intersections.get(interdepth)) { //should trim path until it matches the intersection was curloc on right side expression
+						if (path.get(path.size() - 2) == intersections.get(interdepth)) {
+							
+							exploredpath.add(path.get(path.size() - 1));
+							
+						}
 						path.remove(path.size() - 1);
 					}
 					testedpaths.set(interdepth, testedpaths.get(interdepth) + 1); 	//should update the tested path
+					
+					int[] value = {curloc[0], curloc[1]};
+					path.add(value); //might not need to add ahh well
+					
 					
 					//no possible moves go back to last intersection and try next route
 				}		
@@ -146,6 +157,11 @@ public class Solve{
     			moves[i] = null;
     		}
     		for( int[]foo:path) {
+    			if (moves[i] != null && foo[0] == moves[i][0] && foo[1] == moves[i][1]) {
+    				moves[i] = null;
+    			}
+    		}
+    		for( int[]foo:exploredpath) {
     			if (moves[i] != null && foo[0] == moves[i][0] && foo[1] == moves[i][1]) {
     				moves[i] = null;
     			}
