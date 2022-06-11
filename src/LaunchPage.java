@@ -147,10 +147,10 @@ public class LaunchPage implements ActionListener {
         // to make walls set bit 0 and set bit 23 - flip bit
         //put that object into solve camd and print sovle values
         
-//        MazeDataStructure testingdata_kenzie = new MazeDataStructure(3, 3,30,60, false);
-//        testingdata_kenzie.flipBlock(0);testingdata_kenzie.flipBlock(19);testingdata_kenzie.flipBlock(23);
-//                
-//        Solve idk = new Solve(testingdata_kenzie);
+        MazeDataStructure testingdata_kenzie = new MazeDataStructure(3, 3,30,60, false);
+        testingdata_kenzie.flipBlock(0);testingdata_kenzie.flipBlock(19);testingdata_kenzie.flipBlock(23);
+                
+        Solve idk = new Solve(testingdata_kenzie);
 //        
     }
     
