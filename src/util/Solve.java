@@ -42,6 +42,7 @@ public class Solve{
 			
 			//recursive because fun
 			while (curloc[0] != endloc[0] || curloc[1] != endloc[1] ) { 
+				print(curloc);
 				//print(curloc);
 				List<location> moves = findmoves(curloc,size,distanceto);
 				if (moves.size() > 1){ 			//if there is multiple directions to go
@@ -93,6 +94,7 @@ public class Solve{
 						}
 						path.remove(path.size() - 1);
 					}
+					exploredpath.add(curloc);
 					testedpaths.set(interdepth, testedpaths.get(interdepth) + 1); 	//should update the tested path
 					
 					//int[] value = {curloc[0], curloc[1]};
