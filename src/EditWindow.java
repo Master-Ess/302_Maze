@@ -11,6 +11,9 @@ import util.Capture;
 import util.MazeBlocks;
 import util.MazeDataStructure;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class EditWindow extends JFrame{
 
     private static final long serialVersionUID = 1L;
@@ -23,7 +26,6 @@ public class EditWindow extends JFrame{
     private static JMenuItem New_itm =  new JMenuItem("New...                            Ctrl + N"); //_itm because of syntax conflict 
     private static JMenuItem Load =     new JMenuItem("Load...                           Ctrl + L");
     private static JMenuItem Save =     new JMenuItem("Save                              Ctrl + S");
-    private static JMenuItem Save_as =  new JMenuItem("Save As...        Shift + Ctrl + S");
     private static JMenuItem Export =   new JMenuItem("Export...");
     private static JMenuItem Export_w = new JMenuItem("Export with Solution...");
 
@@ -93,7 +95,6 @@ public class EditWindow extends JFrame{
 	        		saveFile();
 	        	}
 	        });
-        file.add(Save_as);
         file.add(Export);
 	        Export.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
@@ -108,6 +109,9 @@ public class EditWindow extends JFrame{
 					}
 	        	}
 	        });
+	        
+	    getContentPane().addMouseListener(new MouseListener());
+	    
         file.add(Export_w);
 
         menubar.add(edit);
@@ -153,6 +157,7 @@ public class EditWindow extends JFrame{
         		repaint();
         	}
         });
+
         
         add(rotateClockwise);
         rotateClockwise.setBounds(1000, 10, 150, 30);
@@ -201,6 +206,7 @@ public class EditWindow extends JFrame{
         length_sp.setValue(data.getLength());
         
         getContentPane().add(blocks);
+
     }
         
     private void createNewMaze() {
@@ -261,5 +267,18 @@ public class EditWindow extends JFrame{
         	System.exit(0);
         }
      }
+    
+    
+    public class MouseListener extends MouseAdapter {
+    	
+    	@Override
+    	public void mouseClicked(MouseEvent e) {
+    		int x_mouseClicked=e.getX();
+    	    int y_mouseClicked=e.getY();
+    		System.out.println(x_mouseClicked + " , " + y_mouseClicked);
+    		super.mouseClicked(e);
+    	}
+    }
+
     
 }

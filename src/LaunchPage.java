@@ -150,7 +150,7 @@ public class LaunchPage implements ActionListener {
         MazeDataStructure testingdata_kenzie = new MazeDataStructure(3, 3,30,60, false);
         testingdata_kenzie.flipBlock(0);testingdata_kenzie.flipBlock(23);
                 
-        Solve idk = new Solve(testingdata_kenzie);
+        // Solve idk = new Solve(testingdata_kenzie);
         
     }
     
