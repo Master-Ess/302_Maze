@@ -18,7 +18,7 @@ public class Capture {
 	  
 	  Robot robot = new Robot();
 	  
-	  TimeUnit.MILLISECONDS.sleep(10);
+	    TimeUnit.MILLISECONDS.sleep(10);
 	  
 	    // Capture a particular area on the screen
 	 

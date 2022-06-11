@@ -40,21 +40,26 @@ public class Solve{
 			
 			//recursive because fun
 			while (curloc[0] != endloc[0] || curloc[1] != endloc[1] ) { 
+				//print(curloc);
 				
-				if (findmoves(curloc,size).size() > 1){ 			//if there is multiple directions to go
-					
-					path.add(curloc);
+				if (findmoves(curloc,size,distanceto).size() > 1){ 			//if there is multiple directions to go
+					int[] value = {curloc[0], curloc[1]};
+					path.add(value);
 					intersections.add(curloc);
 					interdepth++;
-					permutations.add(findmoves(curloc,size).size());
+					permutations.add(findmoves(curloc,size,distanceto).size());
 					testedpaths.add(1);
 					
-					curloc = findmoves(curloc,size).get(0); 
-				}
-				else if(findmoves(curloc,size).size() == 1){ 		// if there is one direction to go
 					
-					path.add(curloc);
-					curloc = findmoves(curloc,size).get(0); 												//check that this works
+					curloc[0] = findmoves(curloc,size,distanceto).get(0).x ; 												//check that this works
+					curloc[1] = findmoves(curloc,size,distanceto).get(0).y ;
+					
+				}
+				else if(findmoves(curloc,size,distanceto).size() == 1){ 		// if there is one direction to go
+					int[] value = {curloc[0], curloc[1]};
+					path.add(value);
+					curloc[0] = findmoves(curloc,size,distanceto).get(0).x ; 												//check that this works
+					curloc[1] = findmoves(curloc,size,distanceto).get(0).y ;
 				}
 				else {												// if there is no direction to go
 					
@@ -69,7 +74,9 @@ public class Solve{
 						interdepth--;
 					}
 					
-					curloc = findmoves(intersections.get(interdepth),size).get(testedpaths.get(interdepth) + 1); //finds the next path from the last unexpored intersection
+					
+					curloc[0] = findmoves(intersections.get(interdepth),size,distanceto).get(testedpaths.get(interdepth) + 1).x; //finds the next path from the last unexpored intersection
+					curloc[1] = findmoves(intersections.get(interdepth),size,distanceto).get(testedpaths.get(interdepth) + 1).y;
 					while (path.get(path.size() - 1) != curloc) { //should trim path until it matches the intersection
 						path.remove(path.size() - 1);
 					}
@@ -134,11 +141,12 @@ public class Solve{
         return location;
     } 
 
-    private List<int[]> findmoves(int[] loc, int[] maxsize) {
-    	int[][] moves = {{loc[0], loc[1] + 1},{loc[0] - 1, loc[1]},{loc[0], loc[1] - 1},{loc[0] + 1, loc[1]}}; //up, left, down, right
+    private List<location> findmoves(int[] loc, int[] maxsize, int[][] distances) {
+    	int[][] moves = {{loc[0], loc[1] - 1},{loc[0] - 1, loc[1]},{loc[0], loc[1] + 1},{loc[0] + 1, loc[1]}}; //up, left, down, right -->
     	
     	boolean[] walls = data.getWalls(loc[0], loc[1]);
-    	List<int[]> posmoves = new ArrayList<int[]>();
+    	List<int[]> posmoves = new ArrayList<int[]>();	
+    	List <location> locations = new ArrayList <location>();
     	
     	for (int i = 0; i < 4; i++) {
     		if (walls[i]) {
@@ -147,13 +155,33 @@ public class Solve{
     		else if(moves[i][0] < 0 || moves[i][0] > (maxsize[0] - 1) || moves[i][1] < 0 || moves[i][1] > (maxsize[1] - 1)) {
     			moves[i] = null;
     		}
+    		for( int[]foo:path) {
+    			if (foo == moves[i]) {
+    				moves[i] = null;
+    			}
+    		}
     		
     		if(moves[i] != null) {
-    		posmoves.add(moves[i]);
+    		locations.add(new location(moves[i][0], moves[i][1], distances[moves[i][0]][moves[i][1]]));
+    		}
+    		
+    		
+    	}
+    	
+    	
+    	
+    	for(int i = 0; i < locations.size() - 1; i++) {
+    		for(int j = 0; j < locations.size() - 1 - i; j++) {
+    			if (locations.get(j).distance > locations.get(j + 1).distance) {
+    				location temp = locations.get(j);
+    				locations.set(j, locations.get(j + 1));
+    				locations.set(j + 1, temp);
+    			}
     		}
     	}
     		
-    	return posmoves;
+    	//print(distances[posmoves.get(0)[0]][posmoves.get(0)[1]]);
+    	return locations;
     }
     
     //Simple function to find gaps in the walls of the maze
@@ -247,5 +275,31 @@ public class Solve{
     public List<int[]> getPath() {
     	return path;
     }
-	
+    
+    private class location{
+    	int x;
+    	int y;
+    	int distance;
+    	
+    	public location(int x, int y, int distance) {
+        this.x = x;
+        this.y = y;
+        this.distance = distance;
+    	}
+    	
+        public location(int x, int y) {
+            this.x = x;
+            this.y = y;
+            
+        
+        
+        	
+        }
+		
+    	
+    	
+    }
+
 }
+
+	
