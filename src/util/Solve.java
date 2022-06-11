@@ -64,16 +64,13 @@ public class Solve{
 				else {												// if there is no direction to go
 					
 					while (interdepth != 0 && permutations.get(interdepth - 1) == testedpaths.get(interdepth - 1)) { //find last unexplored intersection permutation[interdepth][0] == testedpaths[interdepth[0] && permutation[interdepth][1] == testedpaths[interdepth[0
-						if (interdepth == 0){
-							break; //need to return something i guess
-						}
+						
 						
 						intersections.remove(interdepth);
 						permutations.remove(interdepth);
 						testedpaths.remove(interdepth);
 						interdepth--;
 					}
-					
 					
 					curloc[0] = findmoves(intersections.get(interdepth),size,distanceto).get(testedpaths.get(interdepth) + 1).x; //finds the next path from the last unexpored intersection
 					curloc[1] = findmoves(intersections.get(interdepth),size,distanceto).get(testedpaths.get(interdepth) + 1).y;
@@ -95,12 +92,6 @@ public class Solve{
 				print(endloc);
 				path = null;
 			}
-			
-			
-			print(path);
-			
-			
-			
 		}
 		
 	}

@@ -88,9 +88,7 @@ public class EditWindow extends JFrame{
         file.add(New_itm);
         	New_itm.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
-	        		dispose();
-	        		saveFile();
-	        		Main.createAndShowGui();
+	        		launchPage.showWindow();
 	        	}
 	        });	  
 

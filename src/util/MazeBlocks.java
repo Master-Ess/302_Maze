@@ -39,7 +39,7 @@ public class MazeBlocks extends JPanel{
         //In each of these commented spots, add the builder for a block
     	//y is the row number, x is the column number
 		
-		int[][] tester = {{0,1},{0,2},{1,2}};
+		//int[][] tester = {{0,1},{0,2},{1,2}};
 		if(solution) {
 			solver = new Solve(data);
 			if(solver.getPath() != null) {
