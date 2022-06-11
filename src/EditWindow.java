@@ -64,6 +64,7 @@ public class EditWindow extends JFrame{
     	this.dbdata = dbdata;
     	
     	addWindowListener(new ClosingListener());
+	    getContentPane().addMouseListener(new MouseListener());
     }
     
     public void LoadMaze(MazeDataStructure inputData, String FileName) {
@@ -82,6 +83,14 @@ public class EditWindow extends JFrame{
     	setJMenuBar(menubar);
         menubar.add(file);
         file.add(New_itm);
+        	New_itm.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		dispose();
+	        		saveFile();
+	        		Main.createAndShowGui();
+	        	}
+	        });	  
+
         file.add(Load);
 	        Load.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
@@ -109,8 +118,6 @@ public class EditWindow extends JFrame{
 					}
 	        	}
 	        });
-	        
-	    getContentPane().addMouseListener(new MouseListener());
 	    
         file.add(Export_w);
 
@@ -276,7 +283,6 @@ public class EditWindow extends JFrame{
     		int x_mouseClicked=e.getX();
     	    int y_mouseClicked=e.getY();
     		System.out.println(x_mouseClicked + " , " + y_mouseClicked);
-    		super.mouseClicked(e);
     	}
     }
 
