@@ -1,22 +1,29 @@
 package util;
 
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 import java.awt.Color;
+import java.awt.Container;
 
 public class MazeBlocks extends JPanel{
 	private int thickness;
 	private int length;
+	public boolean solution;
 	private MazeDataStructure data = null;
 	private static int xPadding = 5;
 	private static int yPadding = 50;
 	private Solve solver;
 	
-	public MazeBlocks(MazeDataStructure data) {
+	public MazeBlocks(MazeDataStructure data, Container container) {
     	this.data = data;
     	thickness = data.getThickness();
     	length = data.getLength();
+    	solution = false;
+	    container.addMouseListener(new MouseListener());
     	//solver = new Solve(data);
     	
     	repaint();
@@ -32,7 +39,7 @@ public class MazeBlocks extends JPanel{
     	//y is the row number, x is the column number
 		
 		int[][] tester = {{0,1},{0,2},{1,2}};
-		if(true) {
+		if(true && solution) {
 			for(int[] cell : tester) {
 				drawSolveBlock(g, cell[0] * length + xPadding, cell[1] * length + yPadding);
 			}
@@ -52,9 +59,6 @@ public class MazeBlocks extends JPanel{
         for(int x = 0; x < data.getWidth(); x++){
         	drawHoriBlock(g, x * length + xPadding, data.getHeight() * length + yPadding, data.getBlockState(data.getHeight() * rowNum + x));
         }
-        
-        
-		 
 
 	}
 	
@@ -79,5 +83,56 @@ public class MazeBlocks extends JPanel{
 		int internalSize = (length + thickness);
 		g.drawRect(x, y, internalSize, internalSize);
 		g.fillRect(x, y, internalSize, internalSize);
+	}
+
+	public class MouseListener extends MouseAdapter {
+    	
+		@Override
+    	public void mouseClicked(MouseEvent e) {
+    		int rowNum = data.getWidth() * 2 + 1;
+    		int x_mouseClicked=e.getX();
+    	    int y_mouseClicked=e.getY();  		
+			for(int celly = 0; celly < data.getHeight(); celly++){
+	        	//Top row
+	            for(int cellx = 0; cellx < data.getWidth(); cellx++){
+	            	if(x_mouseClicked > cellx * length + xPadding &&
+	            			x_mouseClicked < cellx * length + xPadding + thickness + length &&
+	            			y_mouseClicked > celly * length + yPadding &&
+	            			y_mouseClicked < celly * length + yPadding + thickness){
+	            		data.flipBlock(celly * rowNum + cellx);
+	            		repaint();
+	            	}
+	            }
+	            //Vertical Lines
+	            for(int cellx = data.getWidth(); cellx < data.getWidth() * 2 + 1; cellx++){
+	            	if(x_mouseClicked > cellx * length - length*data.getWidth() + xPadding &&
+	            			x_mouseClicked < cellx * length - length*data.getWidth() + xPadding + thickness &&
+	            			y_mouseClicked > celly * length + yPadding &&
+	            			y_mouseClicked < celly * length + yPadding + length + thickness){
+	            		data.flipBlock(celly * rowNum + cellx);
+	            		repaint();
+	                }
+	            }
+	        }
+	        //gets bottom line
+	        for(int cellx = 0; cellx < data.getWidth(); cellx++){
+	        	if(x_mouseClicked > cellx * length + xPadding  &&
+            			x_mouseClicked < cellx * length + xPadding + xPadding + thickness + length &&
+            			y_mouseClicked > data.getHeight() * length + yPadding &&
+            			y_mouseClicked < data.getHeight() * length + yPadding + thickness){
+            		data.flipBlock(data.getHeight() * rowNum + cellx);
+            		repaint();
+	        	}
+	        }
+    		
+    	}
+    }
+	
+	public void toggleSolution() {
+		if(solution) {
+			solution = false;
+		}else {
+			solution = true;
+		}
 	}
 }

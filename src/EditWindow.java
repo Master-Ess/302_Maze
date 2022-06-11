@@ -10,6 +10,7 @@ import java.io.IOException;
 import util.Capture;
 import util.MazeBlocks;
 import util.MazeDataStructure;
+import util.MazeBlocks.MouseListener;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -39,6 +40,7 @@ public class EditWindow extends JFrame{
     private static JButton randomise = 	new JButton("Randomise Maze");
     private static JButton rotateClockwise = 	new JButton("Rotate Clockwise");
     private static JButton rotateAnticlockwise = 	new JButton("Rotate Anticlockwise");
+    private static JButton solution = new JButton("Toggle Solution");
     
     private static JLabel x_size_lbl = new JLabel("Maze Width");
     private static JSpinner x_size_sp = new JSpinner();
@@ -48,6 +50,7 @@ public class EditWindow extends JFrame{
     private static JSpinner thickness_sp = new JSpinner();
     private static JLabel length_lbl = new JLabel ("Block Length");
     private static JSpinner length_sp = new JSpinner();
+
     
     private static MazeBlocks blocks;
     
@@ -64,7 +67,7 @@ public class EditWindow extends JFrame{
     	this.dbdata = dbdata;
     	
     	addWindowListener(new ClosingListener());
-	    getContentPane().addMouseListener(new MouseListener());
+    	getContentPane().addMouseListener(new MouseListener());
     }
     
     public void LoadMaze(MazeDataStructure inputData, String FileName) {
@@ -76,7 +79,7 @@ public class EditWindow extends JFrame{
     	createNewMaze();
     	setSpinnerVals();
     }
-    
+	    
     private void initializeUI() {
         label.setBounds(0, 0, 100, 50);
         label.setFont(new Font(null, Font.PLAIN, 25)); 
@@ -184,6 +187,16 @@ public class EditWindow extends JFrame{
 	    	}
 	    });
         
+        add(solution);
+        solution.setBounds(1370, 10, 150, 30);
+        solution.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	    		blocks.toggleSolution();
+	    		repaint();
+	    	}
+	    });
+        
+        
         add(x_size_lbl);
         x_size_lbl.setBounds(5, 5, 80, 40);
 
@@ -220,7 +233,7 @@ public class EditWindow extends JFrame{
     	if(isInit) {
     		getContentPane().remove(blocks);
     	}
-    	blocks = new MazeBlocks(data);
+    	blocks = new MazeBlocks(data, getContentPane());
     	if(!isInit) {
     		initializeUI();
     		isInit = true;
@@ -275,16 +288,13 @@ public class EditWindow extends JFrame{
         }
      }
     
-    
     public class MouseListener extends MouseAdapter {
     	
-    	@Override
+		@Override
     	public void mouseClicked(MouseEvent e) {
-    		int x_mouseClicked=e.getX();
-    	    int y_mouseClicked=e.getY();
-    		System.out.println(x_mouseClicked + " , " + y_mouseClicked);
-    	}
+			repaint();
+		}
+		
     }
-
     
 }
