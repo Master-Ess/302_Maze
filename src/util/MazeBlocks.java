@@ -67,17 +67,19 @@ public class MazeBlocks extends JPanel{
 	}
 	
 	private void drawVertBlock(Graphics g, int x, int y, boolean on){
+		
+		g.setColor(Color.BLACK);
+		g.drawRect(x, y, thickness, length + thickness);
 		if(on) {
-			g.setColor(Color.BLACK);
-			g.drawRect(x, y, thickness, length + thickness);
 			g.fillRect(x, y, thickness, length + thickness);
 		}
 	}
 	
 	private void drawHoriBlock(Graphics g, int x, int y, boolean on){
+		
+		g.setColor(Color.BLACK);
+		g.drawRect(x, y, length + thickness, thickness);
 		if(on) {
-			g.setColor(Color.BLACK);
-			g.drawRect(x, y, length + thickness, thickness);
 			g.fillRect(x, y, length + thickness, thickness);
 		}
 	}
