@@ -42,8 +42,7 @@ public class Solve{
 			
 			//recursive because fun
 			while (curloc[0] != endloc[0] || curloc[1] != endloc[1] ) { 
-				print(curloc);
-				//print(curloc);
+
 				List<location> moves = findmoves(curloc,size,distanceto);
 				if (moves.size() > 1){ 			//if there is multiple directions to go
 					int[] value = {curloc[0], curloc[1]};
@@ -82,8 +81,13 @@ public class Solve{
 							break;
 						}
 						
+						
 						moves = findmoves(intersections.get(interdepth),size,distanceto);
 						
+					}
+					if (interdepth == -1) {
+						print("interdepth is equal to -1");
+						break;
 					}
 					curloc[0] = moves.get(0).x ; 												//check that this works
 					curloc[1] = moves.get(0).y ;
