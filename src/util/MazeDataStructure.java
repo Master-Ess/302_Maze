@@ -237,8 +237,8 @@ public class MazeDataStructure implements Serializable{
         boolean[] walls = new boolean[4];
         int rowNum = mazeWidth * 2 + 1;
             for(int i = 0; i < 2; i++){
-                walls[i*2] = data.get((x+i) * rowNum + y * rowNum);
-                walls[i*2 + 1] = data.get((x+i) * rowNum + mazeWidth + i + y * rowNum);
+                walls[i*2] = data.get(i * rowNum + y * rowNum + x);
+                walls[i*2 + 1] = data.get(x + mazeWidth + i + y * rowNum);
             }
         
         return walls;

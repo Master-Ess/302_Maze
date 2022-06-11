@@ -169,16 +169,16 @@ public class Solve{
     			value = true;
     			if(x == 0 || y == 0 || x == data.getWidth() - 1 || y == data.getHeight() - 1) {
     				walls = data.getWalls(x, y);
-    				if(x == 0 && !loc2Found) {
+    				if(x == 0 && !loc2Found && value && (y == 0 || y == data.getHeight() - 1)) {
     					value = walls[0];
-    				}if(x == data.getWidth() - 1 && !loc2Found) {
+    				}if(x == data.getWidth() - 1 && !loc2Found && value && (y == 0 || y == data.getHeight() - 1)) {
     					value = walls[2];
-    				}if(y == 0 && !loc2Found) {
+    				}if(y == 0 && !loc2Found && value && (x == 0 || x == data.getWidth() - 1)) {
     					value = walls[1];
-    				}if(y == data.getHeight() - 1 && !loc2Found) {
+    				}if(y == data.getHeight() - 1 && !loc2Found && value && (x == 0 || x == data.getWidth() - 1)) {
     					value = walls[3];
     				}
-    				if(value == false && !loc2Found) {
+    				if(!value && !loc2Found) {
     					if(!loc1Found) {
     						returnLocs[0][0]=x;
     						returnLocs[0][1]=y;
