@@ -21,7 +21,7 @@ public class Capture {
 	    TimeUnit.MILLISECONDS.sleep(10);
 	  
 	    // Capture a particular area on the screen
-	 
+	    MazeBlocks.toggleExport();
 	    int x = 2;
 	 
 	    int y = 100;

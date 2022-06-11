@@ -17,7 +17,7 @@ public class MazeBlocks extends JPanel{
 	private static int xPadding = 5;
 	private static int yPadding = 50;
 	private Solve solver;
-	private boolean exporting = false;
+	private static boolean exporting = false;
 	
 	public MazeBlocks(MazeDataStructure data, Container container) {
     	this.data = data;
@@ -68,11 +68,12 @@ public class MazeBlocks extends JPanel{
 	}
 	
 	private void drawVertBlock(Graphics g, int x, int y, boolean on){
-		
-		g.setColor(Color.BLACK);
-		g.drawRect(x, y, thickness, length + thickness);
-		if(on) {
-			g.fillRect(x, y, thickness, length + thickness);
+		if(!exporting) {
+			g.setColor(Color.BLACK);
+			g.drawRect(x, y, thickness, length + thickness);
+			if(on) {
+				g.fillRect(x, y, thickness, length + thickness);
+			}
 		}
 	}
 	
@@ -137,5 +138,5 @@ public class MazeBlocks extends JPanel{
     }
 	
 	public void toggleSolution() {solution = !solution;}
-	public void toggleExport() {exporting = !exporting;}
+	public static void toggleExport() {exporting = !exporting;}
 }
