@@ -6,6 +6,9 @@ import database.SaveFile;
 
 import java.awt.event.*;
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import util.Capture;
 import util.MazeBlocks;
@@ -100,7 +103,7 @@ public class EditWindow extends JFrame{
 	        	}
 	        });	        
         file.add(Save);
-	        randomise.addActionListener(new ActionListener() {
+	        Save.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
 	        		saveFile();
 	        	}
@@ -108,15 +111,20 @@ public class EditWindow extends JFrame{
         file.add(Export);
 	        Export.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
-	        		try {
-						Capture.export(FileName, (data.getWidth() * data.getLength()) + data.getThickness() + 2, (data.getHeight() * data.getLength()) + data.getThickness() + 2);
-					} catch (AWTException e1) {
-						// TODO Auto-generated catch block -- File Error	
-						e1.printStackTrace();
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block -- Timer Error
-						e1.printStackTrace();
-					}
+		        		MazeBlocks.toggleExport();
+		        		repaint();
+	        			ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+	        			Capture.setVals(FileName, (data.getWidth() * data.getLength()) + data.getThickness() + 2, (data.getHeight() * data.getLength()) + data.getThickness() + 2);
+	        			executorService.schedule(() -> {
+							try {
+								Capture.export();
+							} catch (AWTException | InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}, 1, TimeUnit.SECONDS);
+	        			executorService.schedule(MazeBlocks::toggleExport, 1, TimeUnit.SECONDS);
+		        		repaint();
 	        	}
 	        });
 	    

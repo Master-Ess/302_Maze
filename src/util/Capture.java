@@ -7,32 +7,38 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
  
 public class Capture {
+	static String mazename;
+	static int widthin;
+	static int heightin;
+	public static void setVals(String mazeName,int widthIn, int heightIn) {
+		mazename = mazeName;
+		widthin = widthIn;
+		heightin = heightIn;
+	}
  
-  public static void export(String mazename,int widthin, int heightin) throws AWTException, InterruptedException {
+  public static void export() throws AWTException, InterruptedException {
 	  
 	  
 	  Robot robot = new Robot();
 	  
-	    TimeUnit.MILLISECONDS.sleep(10);
 	  
 	    // Capture a particular area on the screen
-	    MazeBlocks.toggleExport();
 	    int x = 2;
 	 
 	    int y = 100;
 	 
 	    int width = widthin;
 	    
-	    System.out.print(width);
 	 
 	    int height = heightin;
 	    
-	    System.out.print(height);
 	 
 	    Rectangle area = new Rectangle(x, y, width, height);
 	 
@@ -71,5 +77,6 @@ public class Capture {
 	  System.out.println("Could not save small screenshot " + e.getMessage());
 	 
 	    }
+	  	ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
   }
 }
