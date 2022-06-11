@@ -116,6 +116,18 @@ public class MazeDataStructure implements Serializable{
 		rotateAntiClockwise();
 	}
 	
+	public void removeHeight(int rows) {
+		mazeHeight -= rows;
+		addHorizontalLine();
+	}
+	
+	public void removeWidth(int rows) {
+		rotateClockwise();
+		mazeHeight -= rows;
+		addHorizontalLine();
+		rotateAntiClockwise();
+	}
+	
 	public void randomise() {
 		int rowNum = mazeWidth * 2 + 1;
 		Random rand = new Random();
@@ -197,6 +209,7 @@ public class MazeDataStructure implements Serializable{
             return "0";
         }
     }
+	
     
     private String printData(){
         StringBuilder output = new StringBuilder();

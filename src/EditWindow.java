@@ -62,11 +62,6 @@ public class EditWindow extends JFrame{
     	this.dbdata = dbdata;
     	
     	addWindowListener(new ClosingListener());
-        
-        //Build Menu
-        //initializeUI();
-        //createNewMaze();
-       
     }
     
     public void LoadMaze(MazeDataStructure inputData, String FileName) {
@@ -136,6 +131,25 @@ public class EditWindow extends JFrame{
         	public void actionPerformed(ActionEvent e) {
         		data.setLength((int)length_sp.getValue());
         		data.setThickness((int)thickness_sp.getValue());
+        		
+        		int mazeHeight = (int)y_size_sp.getValue();
+        		if(mazeHeight != data.getHeight()) {
+        			if(mazeHeight > data.getHeight()) {
+        				data.addHeight(mazeHeight - data.getHeight());
+        			}else{
+        				data.removeHeight(data.getHeight() - mazeHeight);
+        				
+        			}
+        		}
+        		int mazeWidth = (int)x_size_sp.getValue();
+        		if(data.getWidth() != mazeWidth) {
+        			if(mazeWidth > data.getWidth()) {
+        				data.addWidth(mazeWidth - data.getWidth());
+        			}else if(mazeWidth < data.getWidth()){
+        				data.removeWidth(data.getWidth() - mazeWidth);
+        			}
+        		}
+        		
         		repaint();
         	}
         });
