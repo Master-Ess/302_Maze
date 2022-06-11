@@ -78,7 +78,8 @@ public class Solve{
 					while (moves.isEmpty()) {
 						interdepth--;
 						if (interdepth == -1) {
-							//return an error saying there is no path
+							print("interdepth is equal to -1");
+							break;
 						}
 						
 						moves = findmoves(intersections.get(interdepth),size,distanceto);
@@ -86,7 +87,7 @@ public class Solve{
 					}
 					curloc[0] = moves.get(0).x ; 												//check that this works
 					curloc[1] = moves.get(0).y ;
-					while (path.get(path.size() - 1) != intersections.get(interdepth)) { //should trim path until it matches the intersection was curloc on right side expression
+					while (path.get(path.size() - 1) != intersections.get(interdepth) && path.size() > 1) { //should trim path until it matches the intersection was curloc on right side expression
 						if (path.get(path.size() - 2) == intersections.get(interdepth)) {
 							
 							exploredpath.add(path.get(path.size() - 1));
