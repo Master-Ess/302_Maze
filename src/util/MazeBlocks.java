@@ -17,7 +17,7 @@ public class MazeBlocks extends JPanel{
     	this.data = data;
     	thickness = data.getThickness();
     	length = data.getLength();
-    	solver = new Solve(data);
+    	//solver = new Solve(data);
     	
     	repaint();
     }
@@ -32,8 +32,8 @@ public class MazeBlocks extends JPanel{
     	//y is the row number, x is the column number
 		
 		int[][] tester = {{0,1},{0,2},{1,2}};
-		if(solver.getPath() != null) {
-			for(int[] cell : solver.getPath()) {
+		if(true) {
+			for(int[] cell : tester) {
 				drawSolveBlock(g, cell[0] * length + xPadding, cell[1] * length + yPadding);
 			}
 		}
