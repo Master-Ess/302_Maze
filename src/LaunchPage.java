@@ -152,7 +152,7 @@ public class LaunchPage implements ActionListener {
         
         SaveFile file = dbdata.get("MIF");    
         
-        Solve idk = new Solve(file.getData());
+        //Solve idk = new Solve(file.getData());
 //        
     }
     
