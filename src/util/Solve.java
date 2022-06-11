@@ -41,29 +41,29 @@ public class Solve{
 			//recursive because fun
 			while (curloc[0] != endloc[0] || curloc[1] != endloc[1] ) { 
 				//print(curloc);
-				
-				if (findmoves(curloc,size,distanceto).size() > 1){ 			//if there is multiple directions to go
+				List<location> moves = findmoves(curloc,size,distanceto);
+				if (moves.size() > 1){ 			//if there is multiple directions to go
 					int[] value = {curloc[0], curloc[1]};
 					path.add(value);
-					intersections.add(curloc);
+					intersections.add(value);
 					interdepth++;
-					permutations.add(findmoves(curloc,size,distanceto).size());
+					permutations.add(moves.size());
 					testedpaths.add(1);
 					
 					
-					curloc[0] = findmoves(curloc,size,distanceto).get(0).x ; 												//check that this works
-					curloc[1] = findmoves(curloc,size,distanceto).get(0).y ;
+					curloc[0] = moves.get(0).x ; 												//check that this works
+					curloc[1] = moves.get(0).y ;
 					
 				}
-				else if(findmoves(curloc,size,distanceto).size() == 1){ 		// if there is one direction to go
+				else if(moves.size() == 1){ 		// if there is one direction to go
 					int[] value = {curloc[0], curloc[1]};
 					path.add(value);
-					curloc[0] = findmoves(curloc,size,distanceto).get(0).x ; 												//check that this works
-					curloc[1] = findmoves(curloc,size,distanceto).get(0).y ;
+					curloc[0] = moves.get(0).x ; 												//check that this works
+					curloc[1] = moves.get(0).y ;
 				}
 				else {												// if there is no direction to go
 					
-					while (permutations.get(interdepth) == testedpaths.get(interdepth)) { //find last unexplored intersection permutation[interdepth][0] == testedpaths[interdepth[0] && permutation[interdepth][1] == testedpaths[interdepth[0
+					while (interdepth != 0 && permutations.get(interdepth - 1) == testedpaths.get(interdepth - 1)) { //find last unexplored intersection permutation[interdepth][0] == testedpaths[interdepth[0] && permutation[interdepth][1] == testedpaths[interdepth[0
 						if (interdepth == 0){
 							break; //need to return something i guess
 						}
@@ -156,7 +156,7 @@ public class Solve{
     			moves[i] = null;
     		}
     		for( int[]foo:path) {
-    			if (foo == moves[i]) {
+    			if (moves[i] != null && foo[0] == moves[i][0] && foo[1] == moves[i][1]) {
     				moves[i] = null;
     			}
     		}
@@ -197,21 +197,21 @@ public class Solve{
     			value = true;
     			if(x == 0 || y == 0 || x == data.getWidth() - 1 || y == data.getHeight() - 1) {
     				walls = data.getWalls(x, y);
-    				if(x == 0 && !loc2Found && value && (y == 0 || y == data.getHeight() - 1)) {
-    					value = walls[0];
-    				}if(x == data.getWidth() - 1 && !loc2Found && value && (y == 0 || y == data.getHeight() - 1)) {
-    					value = walls[2];
-    				}if(y == 0 && !loc2Found && value && (x == 0 || x == data.getWidth() - 1)) {
+    				if(x == 0 && !loc2Found && value) {
     					value = walls[1];
-    				}if(y == data.getHeight() - 1 && !loc2Found && value && (x == 0 || x == data.getWidth() - 1)) {
+    				}if(x == data.getWidth() - 1 && !loc2Found && value) {
     					value = walls[3];
+    				}if(y == 0 && !loc2Found && value) {
+    					value = walls[0];
+    				}if(y == data.getHeight() - 1 && !loc2Found && value) {
+    					value = walls[2];
     				}
     				if(!value && !loc2Found) {
     					if(!loc1Found) {
     						returnLocs[0][0]=x;
     						returnLocs[0][1]=y;
     						loc1Found = true;
-    					}else if(returnLocs[0][0] != x && returnLocs[0][1] != y && !loc2Found){
+    					}else if(!loc2Found){
     						returnLocs[1][0] = x;
     						returnLocs[1][1] = y;
     						loc2Found = true;
