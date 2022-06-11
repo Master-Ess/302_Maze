@@ -32,7 +32,7 @@ public class Solve{
 			List<Integer> permutations = new ArrayList<Integer>();		//lists the number of splits at each intersection ( 2 or 3)
 			List<Integer> testedpaths = new ArrayList<Integer>();		//list the number of splits explored for each intersection - default 1 max 3
 			
-			int interdepth = 0; //might not be needed was -1 dont know why
+			int interdepth = -1; //might not be needed was -1 dont know why
 			
 			int[] curloc = startloc;
 			
@@ -135,8 +135,7 @@ public class Solve{
     private List<location> findmoves(int[] loc, int[] maxsize, int[][] distances) {
     	int[][] moves = {{loc[0], loc[1] - 1},{loc[0] - 1, loc[1]},{loc[0], loc[1] + 1},{loc[0] + 1, loc[1]}}; //up, left, down, right -->
     	
-    	boolean[] walls = data.getWalls(loc[0], loc[1]);
-    	List<int[]> posmoves = new ArrayList<int[]>();	
+    	boolean[] walls = data.getWalls(loc[0], loc[1]);	
     	List <location> locations = new ArrayList <location>();
     	
     	for (int i = 0; i < 4; i++) {
