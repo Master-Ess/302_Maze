@@ -128,8 +128,6 @@ public class EditWindow extends JFrame{
 		        		repaint();
 	        	}
 	        });
-	    
-        file.add(Export_w);
 
         menubar.add(edit);
         edit.add(undo);

@@ -34,14 +34,14 @@ public class Solve{
 			List<Integer> permutations = new ArrayList<Integer>();		//lists the number of splits at each intersection ( 2 or 3)
 			List<Integer> testedpaths = new ArrayList<Integer>();		//list the number of splits explored for each intersection - default 1 max 3
 			
-			int interdepth = -1; //might not be needed was -1 dont know why
+			int interdepth = -1; 
 			
 			int[] curloc = startloc;
 			
 			
 			
-			//recursive because fun
-			while (curloc[0] != endloc[0] || curloc[1] != endloc[1] ) { 
+			//
+			while (curloc[0] != endloc[0] || curloc[1] != endloc[1] ) { //continue until the current location is equal to the end location 
 
 				List<location> moves = findmoves(curloc,size,distanceto);
 				if (moves.size() > 1){ 			//if there is multiple directions to go
@@ -53,14 +53,14 @@ public class Solve{
 					testedpaths.add(1);
 					
 					
-					curloc[0] = moves.get(0).x ; 												//check that this works
+					curloc[0] = moves.get(0).x ; 												
 					curloc[1] = moves.get(0).y ;
 					
 				}
 				else if(moves.size() == 1){ 		// if there is one direction to go
 					int[] value = {curloc[0], curloc[1]};
 					path.add(value);
-					curloc[0] = moves.get(0).x ; 												//check that this works
+					curloc[0] = moves.get(0).x ; 												
 					curloc[1] = moves.get(0).y ;
 				}
 				else {												// if there is no direction to go
@@ -68,7 +68,7 @@ public class Solve{
 					while (interdepth != 0 && permutations.get(interdepth - 1) == testedpaths.get(interdepth - 1)) { //find last unexplored intersection permutation[interdepth][0] == testedpaths[interdepth[0] && permutation[interdepth][1] == testedpaths[interdepth[0
 						
 						
-						intersections.remove(interdepth);
+						intersections.remove(interdepth);  // shaves last intersection details when not needed
 						permutations.remove(interdepth);
 						testedpaths.remove(interdepth);
 						interdepth--;
@@ -165,19 +165,19 @@ public class Solve{
     	boolean[] walls = data.getWalls(loc[0], loc[1]);	
     	List <location> locations = new ArrayList <location>();
     	
-    	for (int i = 0; i < 4; i++) {
-    		if (walls[i]) {
+    	for (int i = 0; i < 4; i++) { 
+    		if (walls[i]) { // Check if a wall blocks movement
     			moves[i] = null;
     		}
-    		else if(moves[i][0] < 0 || moves[i][0] > (maxsize[0] - 1) || moves[i][1] < 0 || moves[i][1] > (maxsize[1] - 1)) {
+    		else if(moves[i][0] < 0 || moves[i][0] > (maxsize[0] - 1) || moves[i][1] < 0 || moves[i][1] > (maxsize[1] - 1)) { //Check if out of bounds
     			moves[i] = null;
     		}
-    		for( int[]foo:path) {
+    		for( int[]foo:path) { //Checks if path is along the saved path
     			if (moves[i] != null && foo[0] == moves[i][0] && foo[1] == moves[i][1]) {
     				moves[i] = null;
     			}
     		}
-    		for( int[]foo:exploredpath) {
+    		for( int[]foo:exploredpath) { // Checks if path is along saved path - previous intersections explored not ob path list.
     			if (moves[i] != null && foo[0] == moves[i][0] && foo[1] == moves[i][1]) {
     				moves[i] = null;
     			}
@@ -192,7 +192,7 @@ public class Solve{
     	
     	
     	
-    	for(int i = 0; i < locations.size() - 1; i++) {
+    	for(int i = 0; i < locations.size() - 1; i++) { //Bubble Sort - efficiency  not needed - max moves 3
     		for(int j = 0; j < locations.size() - 1 - i; j++) {
     			if (locations.get(j).distance > locations.get(j + 1).distance) {
     				location temp = locations.get(j);
