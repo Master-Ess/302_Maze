@@ -42,7 +42,7 @@ public class Loadmaze extends JFrame{
         addClosingListener(new ClosingListener());
 
         // decorate the frame and make it visible
-        setTitle("Address Book");
+        setTitle("M-ELK - Load Maze");
         setMinimumSize(new Dimension(400, 300));
         pack();
         setVisible(true);        
