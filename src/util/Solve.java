@@ -115,6 +115,7 @@ public class Solve{
 			}
 			
 			if (path.get(path.size() - 1) [0] != endloc[0] || path.get(path.size() - 1)[1] != endloc[1]){
+				print(path);
 				print(path.get(path.size() - 1));
 				print(endloc);
 				path = null;

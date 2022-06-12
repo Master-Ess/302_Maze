@@ -34,7 +34,7 @@ public class LaunchPage implements ActionListener {
     private static JSpinner x_size_sp = new JSpinner();
     private static JLabel y_size_lbl = new JLabel("Maze Height");
     private static JSpinner y_size_sp = new JSpinner();
-    private static JLabel thickness_lbl = new JLabel ("Maze Thickness");
+    private static JLabel thickness_lbl = new JLabel ("Block Thickness");
     private static JSpinner thickness_sp = new JSpinner();
     private static JLabel length_lbl = new JLabel ("Block Length");
     private static JSpinner length_sp = new JSpinner();
@@ -94,14 +94,14 @@ public class LaunchPage implements ActionListener {
 
         frame.add(x_size_sp);
         x_size_sp.setBounds(125,140, 60, 20);
-        x_size_sp.setValue(1);
+        x_size_sp.setValue(5);
 
         frame.add(y_size_lbl);
         y_size_lbl.setBounds(205, 130, 80, 40);
 
         frame.add(y_size_sp);
         y_size_sp.setBounds(295, 140, 60, 20);
-        y_size_sp.setValue(1);
+        y_size_sp.setValue(5);
         
         frame.add(thickness_lbl);
         thickness_lbl.setBounds(10, 160, 120, 40);
