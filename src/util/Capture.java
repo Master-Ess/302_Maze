@@ -23,9 +23,9 @@ public class Capture {
 		heightin = heightIn;
 	}
  
+// This method is used to export an image of the maze
   public static void export() throws AWTException, InterruptedException {
-	  
-	  
+	   
 	  Robot robot = new Robot();
 	  
 	  

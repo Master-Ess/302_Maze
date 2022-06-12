@@ -61,14 +61,17 @@ public class MazeDataStructure implements Serializable{
 		calculateBlocks();
 	}
 	
+	// This method flips the block
 	public void flipBlock(int blockNum) {
 		data.flip(blockNum);
 	}
 	
+	// This method gets the current state of the block
 	public boolean getBlockState(int blockNum) {
 		return data.get(blockNum);
 	}
 	
+	// This method rotates the mazes in a clockwise direction
 	public void rotateClockwise() {
 		//Top to bottom, right to left
 		BitSet rotated = new BitSet();
@@ -95,6 +98,7 @@ public class MazeDataStructure implements Serializable{
         mazeWidth = rotWidth;
 	}
 	
+	// This method rotates the mazes in an anticlockwise direction
 	public void rotateAntiClockwise() {
 		//Bottom to top, left to right
 		rotateClockwise();
@@ -102,6 +106,7 @@ public class MazeDataStructure implements Serializable{
 		rotateClockwise();
 	}
 	
+	// This method adds height to the maze
 	public void addHeight(int rows) {
 		for(int x = 0; x < rows; x++) {
 			addVerticalLine();
@@ -110,17 +115,20 @@ public class MazeDataStructure implements Serializable{
 		addHorizontalLine();
 	}
 	
+	// This method adds width to the maze
 	public void addWidth(int rows) {
 		rotateClockwise();
 		addHeight(rows);
 		rotateAntiClockwise();
 	}
 	
+	// This method reduces the height of the maze
 	public void removeHeight(int rows) {
 		mazeHeight -= rows;
 		addHorizontalLine();
 	}
 	
+	// This method reduces the width of the maze
 	public void removeWidth(int rows) {
 		rotateClockwise();
 		mazeHeight -= rows;
@@ -128,6 +136,7 @@ public class MazeDataStructure implements Serializable{
 		rotateAntiClockwise();
 	}
 	
+	// This method randomly generates a maze
 	public void randomise() {
 		int rowNum = mazeWidth * 2 + 1;
 		Random rand = new Random();
@@ -149,10 +158,12 @@ public class MazeDataStructure implements Serializable{
         }
 	}
 	
+	// This method sets the length of a block 
 	public void setLength(int blockLength) {
 		this.blockLength = blockLength;
 	}
 	
+	// This method sets teh thickness of a block
 	public void setThickness(int blockThickness) {
 		this.blockThickness = blockThickness;
 	}
@@ -188,16 +199,19 @@ public class MazeDataStructure implements Serializable{
 		System.out.println(printData());
 	}
 	
+	// This method adds a vertical line to the maze
 	private void addVerticalLine() {
 		calculateBlocks();
 		data.set(blocks);
 		data.set(blocks + mazeWidth);
 	}
+	
+	// This method adds a horizontal line to the maze
 	private void addHorizontalLine() {
 		calculateBlocks();
 		data.set(blocks - mazeWidth, blocks);
 	}
-	
+
 	private void calculateBlocks() {
 		blocks = (mazeWidth + 1) * mazeHeight + mazeWidth * mazeHeight + mazeWidth;
 	}

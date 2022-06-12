@@ -48,17 +48,20 @@ public class Loadmaze extends JFrame{
         setVisible(true);        
     }
     
+    // This method is used to set windows
     public void setWindows(EditWindow editWindow, LaunchPage launchPage) {
     	this.editWindow = editWindow;
     	this.launchPage = launchPage;
     }
     
+    // This method is used to change the visibility of windows
     public void showWindow() {
     	setVisible(true);
     	editWindow.setVisible(false);
     	launchPage.setVisible(false);
     }
     
+    // This method is used to initialize the UI
     private void initUI() {
     	Container contentPane = this.getContentPane();
     	contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

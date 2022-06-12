@@ -67,6 +67,7 @@ public class MazeBlocks extends JPanel{
 
 	}
 	
+	// This method is used to draw vertical blocks
 	private void drawVertBlock(Graphics g, int x, int y, boolean on){
 		g.setColor(Color.BLACK);
 		if(!exporting) {
@@ -78,6 +79,7 @@ public class MazeBlocks extends JPanel{
 
 	}
 	
+	// This method is used to draw horizontal blocks
 	private void drawHoriBlock(Graphics g, int x, int y, boolean on){
 		g.setColor(Color.BLACK);
 		if(!exporting) {
@@ -89,15 +91,18 @@ public class MazeBlocks extends JPanel{
 
 	}
 	
+	// This method is used to draw the solution path (if one exists) for the maze
 	private void drawSolveBlock(Graphics g, int x, int y) {
 		g.setColor(Color.RED);
 		int internalSize = (length + thickness);
 		g.drawRect(x, y, internalSize, internalSize);
 		g.fillRect(x, y, internalSize, internalSize);
 	}
-
+	
+	
 	public class MouseListener extends MouseAdapter {
     	
+		// This method is used to detect a mouse click and change the state of the wall
 		@Override
     	public void mouseClicked(MouseEvent e) {
     		int rowNum = data.getWidth() * 2 + 1;
@@ -125,7 +130,7 @@ public class MazeBlocks extends JPanel{
 	                }
 	            }
 	        }
-	        //gets bottom line
+	        //Bottom line
 	        for(int cellx = 0; cellx < data.getWidth(); cellx++){
 	        	if(x_mouseClicked > cellx * length + xPadding  &&
             			x_mouseClicked < cellx * length + xPadding + xPadding + thickness + length &&

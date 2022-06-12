@@ -165,8 +165,8 @@ public class LaunchPage implements ActionListener {
     
     private void reset() {
     	file_exists.setVisible(false);
-    	y_size_sp.setValue(1);
-    	x_size_sp.setValue(1);
+    	y_size_sp.setValue(5);
+    	x_size_sp.setValue(5);
     	filename_tf.setText("");
     	makername_tf.setText("");
     	makercomp_tf.setText("");

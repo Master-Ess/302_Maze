@@ -31,7 +31,6 @@ public class EditWindow extends JFrame{
     private static JMenuItem Load =     new JMenuItem("Load...                           Ctrl + L");
     private static JMenuItem Save =     new JMenuItem("Save                              Ctrl + S");
     private static JMenuItem Export =   new JMenuItem("Export...");
-    private static JMenuItem Export_w = new JMenuItem("Export with Solution...");
 
     private static JMenu edit =         new JMenu("Edit");
     private static JMenuItem undo =     new JMenuItem("Undo                              Ctrl + Z"); 
@@ -73,6 +72,7 @@ public class EditWindow extends JFrame{
     	getContentPane().addMouseListener(new MouseListener());
     }
     
+    // This method is used to call the load 
     public void LoadMaze(MazeDataStructure inputData, String FileName) {
     	setVisible(true);
     	this.data = inputData;
@@ -83,6 +83,7 @@ public class EditWindow extends JFrame{
     	setSpinnerVals();
     }
 	    
+    // This method initializes the UI and displays all the relevant components
     private void initializeUI() {
         label.setBounds(0, 0, 100, 50);
         label.setFont(new Font(null, Font.PLAIN, 25)); 
@@ -235,6 +236,7 @@ public class EditWindow extends JFrame{
 
     }
         
+    // This method generates a new maze
     private void createNewMaze() {
     	if(isInit) {
     		getContentPane().remove(blocks);
@@ -253,6 +255,7 @@ public class EditWindow extends JFrame{
 		repaint();
     }
     
+    // This method dynamically updates the spinner values for the width, height, length and thickness 
     private void setSpinnerVals() {
     	x_size_sp.setValue((int)data.getWidth());
     	y_size_sp.setValue((int)data.getHeight());
@@ -266,14 +269,7 @@ public class EditWindow extends JFrame{
     	this.launchPage = launchPage;
     }
     
-    private void exportImage() throws AWTException {
-    	//Capture.export(FileName);
-    }
-    
-    private void exportImageSolution() {
-    	
-    }
-    
+    // This method saves the maze to the database
     private void saveFile() {
     	SaveFile file = new SaveFile();
     	file.setData(data);
